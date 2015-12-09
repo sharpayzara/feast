@@ -1,10 +1,9 @@
-package com.school.food.feast;
-
-import com.design.foodapp.R;
+package com.school.food.feast.activity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,8 +23,8 @@ public class SplashActivity extends Activity {
 	//****************************************************************
     // 判断应用是否初次加载，读取SharedPreferences中的guide_activity字段
     //****************************************************************
-    private static final String SHAREDPREFERENCES_NAME = "my_pref";
-    private static final String KEY_GUIDE_ACTIVITY = "guide_activity";
+    public static final String SHAREDPREFERENCES_NAME = "my_pref";
+    public static final String KEY_GUIDE_ACTIVITY = "guide_activity";
 	 private boolean isFirstEnter(Context context,String className){
         if(context==null || className==null||"".equalsIgnoreCase(className))return false;
         String mResultStr = context.getSharedPreferences(SHAREDPREFERENCES_NAME, Context.MODE_PRIVATE)
@@ -52,6 +51,10 @@ public class SplashActivity extends Activity {
                 SplashActivity.this.finish();
                 break;
             case SWITCH_GUIDACTIVITY:
+                SharedPreferences preferences = SplashActivity.this.getSharedPreferences(SHAREDPREFERENCES_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString(KEY_GUIDE_ACTIVITY, "false");
+                editor.commit();
             	Intent intent = new Intent();
                 intent.setClass(SplashActivity.this, GuideActivity.class);
                 SplashActivity.this.startActivity(intent);
