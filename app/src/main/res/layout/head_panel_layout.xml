@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.design.foodapp.layout.HeadControlPanel xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_alignParentTop="true" >
+
+    <TextView
+        android:id="@+id/midle_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/right_title"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingRight="10dp"
+        android:paddingLeft="5dp"
+        android:background="@drawable/confirm_button_selector"
+        android:textColor="@android:color/white"
+        android:textSize="15sp" />
+
+</com.design.foodapp.layout.HeadControlPanel>
