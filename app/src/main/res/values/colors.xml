@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="confirm_check_bg">#979797</color>
+    <color name="move_check_bg">#DBDBDB</color>
+    <color name="tab_1">#747474</color>
+    <color name="bg_line">#E5E5E5</color>
 </resources>

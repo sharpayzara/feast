@@ -1,34 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.design.foodapp.layout.BottomControlPanel xmlns:android="http://schemas.android.com/apk/res/android"
+<com.school.food.feast.layout.BottomControlPanel xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="55dp"
+    android:layout_height="50dp"
     android:layout_alignParentBottom="true"
-    android:gravity="center_vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp" >
+    android:gravity="center">
 
-    <com.design.foodapp.layout.ImageText
+    <com.school.food.feast.layout.ImageText
         android:id="@+id/btn_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"/>
 
-    <com.design.foodapp.layout.ImageText
-        android:id="@+id/btn_cart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/btn_home" />
-
-    <com.design.foodapp.layout.ImageText
+    <com.school.food.feast.layout.ImageText
         android:id="@+id/btn_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/btn_cart" />
+        android:layout_toRightOf="@id/btn_home"/>
 
-    <com.design.foodapp.layout.ImageText
-        android:id="@+id/btn_fun"
+    <com.school.food.feast.layout.ImageText
+        android:id="@+id/btn_mine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"/>
 
-</com.design.foodapp.layout.BottomControlPanel>
+</com.school.food.feast.layout.BottomControlPanel>

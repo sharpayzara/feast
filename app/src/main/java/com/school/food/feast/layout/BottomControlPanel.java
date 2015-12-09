@@ -8,17 +8,17 @@ import android.widget.RelativeLayout;
 
 import com.school.food.feast.R;
 import com.school.food.feast.util.Constant;
+import com.school.food.feast.util.SizeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class BottomControlPanel extends RelativeLayout implements View.OnClickListener{
-	//private Context mContext;
+	private Context mContext;
 	private ImageText mHomeBtn = null;
-	private ImageText mCardBtn = null;
 	private ImageText mOrderBtn = null;
-	private ImageText mFunBtn = null;
+	private ImageText mMineBtn = null;
 	private int DEFALUT_BACKGROUND_COLOR = Color.rgb(243, 243, 243);
 	private BottomPanelCallback mBottomCallback = null;
 	private List<ImageText> viewList = new ArrayList<ImageText>();
@@ -29,20 +29,18 @@ public class BottomControlPanel extends RelativeLayout implements View.OnClickLi
 
 	public BottomControlPanel(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
+		mContext = context;
 	}
 	@Override
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		mHomeBtn = (ImageText)findViewById(R.id.btn_home);
-		mCardBtn = (ImageText)findViewById(R.id.btn_cart);
 		mOrderBtn = (ImageText)findViewById(R.id.btn_order);
-		mFunBtn = (ImageText)findViewById(R.id.btn_fun);
+		mMineBtn = (ImageText)findViewById(R.id.btn_mine);
 		setBackgroundColor(DEFALUT_BACKGROUND_COLOR);
 		viewList.add(mHomeBtn);
-		viewList.add(mCardBtn);
 		viewList.add(mOrderBtn);
-		viewList.add(mFunBtn);
+		viewList.add(mMineBtn);
 	}
 	public void initBottomPanel(){
 		if(mHomeBtn != null){
@@ -53,9 +51,9 @@ public class BottomControlPanel extends RelativeLayout implements View.OnClickLi
 			mOrderBtn.setImage(R.drawable.order);
 			mOrderBtn.setText("订单");
 		}
-		if(mCardBtn != null){
-			mCardBtn.setImage(R.drawable.mine);
-			mCardBtn.setText("购物车");
+		if(mMineBtn != null){
+			mMineBtn.setImage(R.drawable.mine);
+			mMineBtn.setText("我的");
 		}
 		setBtnListener();
 	}
@@ -87,9 +85,9 @@ public class BottomControlPanel extends RelativeLayout implements View.OnClickLi
 				index = Constant.BTN_FLAG_ORDER;
 				mOrderBtn.setChecked(Constant.BTN_FLAG_ORDER);
 				break;
-			case R.id.btn_cart:
+			case R.id.btn_mine:
 				index = Constant.BTN_FLAG_MINE;
-				mCardBtn.setChecked(Constant.BTN_FLAG_MINE);
+				mMineBtn.setChecked(Constant.BTN_FLAG_MINE);
 				break;
 			default:break;
 		}
@@ -118,25 +116,13 @@ public class BottomControlPanel extends RelativeLayout implements View.OnClickLi
 	 */
 	private void layoutItems(int left, int top, int right, int bottom){
 		int n = getChildCount();
-		if(n == 0){
-			return;
+		int widthPx = SizeUtils.getSysWidthPx(mContext);
+		int eachWidth = widthPx / n;
+		for (int i = 0; i < n; i++) {
+			LayoutParams tempParams = (LayoutParams) viewList.get(i)
+					.getLayoutParams();
+			tempParams.width = eachWidth;
+			viewList.get(i).setLayoutParams(tempParams);
 		}
-		int paddingLeft = getPaddingLeft();
-		int paddingRight = getPaddingRight();
-		int width = right - left;
-		int allViewWidth = 0;
-		for(int i = 0; i< n; i++){
-			View v = getChildAt(i);
-			allViewWidth += v.getWidth();
-		}
-		int blankWidth = (width - allViewWidth - paddingLeft - paddingRight) / (n - 1);
-
-		LayoutParams params1 = (LayoutParams) viewList.get(1).getLayoutParams();
-		params1.leftMargin = blankWidth;
-		viewList.get(1).setLayoutParams(params1);
-
-		LayoutParams params2 = (LayoutParams) viewList.get(2).getLayoutParams();
-		params2.leftMargin = blankWidth;
-		viewList.get(2).setLayoutParams(params2);
 	}
 }

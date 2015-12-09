@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="#eeeeee">
+
+    <!--<LinearLayout
+         android:layout_width="fill_parent"
+   		 android:layout_height="wrap_content"
+   		 android:orientation="horizontal" 
+   		 android:paddingTop="5dp"
+   		 android:gravity="right">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="0.3"
+            android:background="@drawable/bg_search"
+            android:ems="10"
+            android:hint="@string/hint_search_str"
+            android:editable="false">
+        </EditText>
+
+	    <Button
+	        android:id="@+id/search_btn"
+	        style="@style/yellowButton"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="3dp"
+	        android:layout_weight="0.7"
+	        android:text="搜索" />
+	    
+     
+    </LinearLayout>
+    <ImageView
+	      android:id="@+id/iv_search"
+	      android:layout_width="fill_parent"
+	      android:layout_height="wrap_content"
+		  android:background="@drawable/spaceline"
+	      />
+   <ListView 
+       android:id="@+id/list_view"
+       android:layout_width="match_parent"
+       android:layout_height="fill_parent"
+       android:background="#FFF"/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="home"/>
+</LinearLayout>
