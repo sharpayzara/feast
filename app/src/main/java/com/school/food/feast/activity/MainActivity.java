@@ -1,5 +1,6 @@
 package com.school.food.feast.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 
 import com.school.food.feast.R;
 import com.school.food.feast.fragment.HomeFragment;
+import com.school.food.feast.fragment.OrderFragment;
 import com.school.food.feast.layout.BottomControlPanel;
 import com.school.food.feast.layout.HeadControlPanel;
 import com.school.food.feast.util.Constant;
@@ -115,7 +117,7 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
             if(tag.equals(Constant.FRAGMENT_FLAG_HOME)){
                 f = new HomeFragment();
             }else if(tag.equals(Constant.FRAGMENT_FLAG_ORDER)){
-                f = new HomeFragment();
+                f = new OrderFragment();
             }else if(tag.equals(Constant.FRAGMENT_FLAG_MINE)){
                 f = new HomeFragment();
             }
@@ -137,12 +139,33 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
         if(TextUtils.equals(tag, currFragTag)){
             return;
         }
+        if(tag.equals(Constant.FRAGMENT_FLAG_HOME)){
+            headPanel.setTitlePanelColor(Color.rgb(254, 77, 61));
+            headPanel.setTitlePanelTextColor(Color.rgb(255, 255, 255));
+        }else if(tag.equals(Constant.FRAGMENT_FLAG_ORDER)){
+            headPanel.setTitlePanelColor(Color.rgb(255, 255, 255));
+            headPanel.setTitlePanelTextColor(Color.rgb(0, 0, 0));
+        }else if(tag.equals(Constant.FRAGMENT_FLAG_MINE)){
+            headPanel.setTitlePanelColor(Color.rgb(254,77,61));
+            headPanel.setTitlePanelTextColor(Color.rgb(255, 255, 255));
+        }
         headPanel.getmRightTitle().setVisibility(View.INVISIBLE);
         //把上一个fragment detach掉
-        if(currFragTag != null && !currFragTag.equals("")){
+ /*       if(currFragTag != null && !currFragTag.equals("")){
             detachFragment(getFragment(currFragTag));
         }
-        attachFragment(R.id.fragment_content, getFragment(tag), tag);
+        attachFragment(R.id.fragment_content, getFragment(tag), tag);*/
+        if(currFragTag == null || currFragTag.equals("")){
+            fragmentTransaction.add(R.id.fragment_content, getFragment(tag), tag);
+        }else{
+            if (!getFragment(tag).isAdded()) { // 先判断是否被add过
+                fragmentTransaction.hide(getFragment(currFragTag)).add(R.id.fragment_content, getFragment(tag),tag); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                fragmentTransaction.hide(getFragment(currFragTag)).show(getFragment(tag)); // 隐藏当前的fragment，显示下一个
+            }
+        }
+
+      //  mContent = to;
         commitTransactions( tag);
     }
 
@@ -160,7 +183,6 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
     protected void onStop() {
         // TODO Auto-generated method stub
         super.onStop();
-        //	currFragTag = "";
     }
 
     @Override

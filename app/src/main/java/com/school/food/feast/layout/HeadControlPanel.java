@@ -32,10 +32,15 @@ public class HeadControlPanel extends RelativeLayout{
 		setBackgroundColor(default_background_color);
 	}
 	public void initHeadPanel(){
-		
 		if(mMidleTitle != null){
 			setMiddleTitle(Constant.FRAGMENT_FLAG_HOME);
 		}
+	}
+	public void setTitlePanelColor(int color){
+		setBackgroundColor(color);
+	}
+	public void setTitlePanelTextColor(int color){
+		mMidleTitle.setTextColor(color);
 	}
 	public void setMiddleTitle(String s){
 		mMidleTitle.setText(s);

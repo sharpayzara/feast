@@ -7,4 +7,11 @@
     <color name="move_check_bg">#DBDBDB</color>
     <color name="tab_1">#747474</color>
     <color name="bg_line">#E5E5E5</color>
+    <color name="bg_imageview">#F5F5F5</color>
+    <color name="bg_color_home">#EAEAEA</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000</color>
+    <color name="hs">#9C9C9C</color>
+    <color name="tab_check_bg">#FFA129</color>
+    <color name="tab_un_check_bg">#E6E6E7</color>
 </resources>
