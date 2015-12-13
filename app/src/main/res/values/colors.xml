@@ -14,4 +14,5 @@
     <color name="hs">#9C9C9C</color>
     <color name="tab_check_bg">#FFA129</color>
     <color name="tab_un_check_bg">#E6E6E7</color>
+    <color name="login_line">#FF6900</color>
 </resources>
