@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.school.food.feast.util.Constant;
 public class HeadControlPanel extends RelativeLayout{
 	private Context mContext;
 	private TextView mMidleTitle;
+	private LinearLayout mLeftBtn;
 	private Button mRightTitle;
 	private static final float middle_title_size = 20f; 
 	private static final float right_title_size = 17f; 
@@ -29,6 +31,7 @@ public class HeadControlPanel extends RelativeLayout{
 		super.onFinishInflate();
 		mMidleTitle = (TextView)findViewById(R.id.midle_title);
 		mRightTitle = (Button) findViewById(R.id.right_title);
+		mLeftBtn = (LinearLayout) findViewById(R.id.left_btn);
 		setBackgroundColor(default_background_color);
 	}
 	public void initHeadPanel(){

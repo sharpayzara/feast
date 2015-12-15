@@ -7,12 +7,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
- 
+
+import cn.bmob.v3.Bmob;
+
 public class SplashActivity extends Activity {
+
+    public static String APPID = "7ff3b5ddaf309007e16c13b8fafc1fd1";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
+        Bmob.initialize(this, APPID);
 		boolean mFirst = isFirstEnter(SplashActivity.this,SplashActivity.this.getClass().getName());
         if(mFirst)
         	mHandler.sendEmptyMessage(SWITCH_GUIDACTIVITY);
