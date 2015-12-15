@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.school.food.feast.R;
 import com.school.food.feast.fragment.HomeFragment;
+import com.school.food.feast.fragment.MineFragment;
 import com.school.food.feast.fragment.OrderFragment;
 import com.school.food.feast.layout.BottomControlPanel;
 import com.school.food.feast.layout.HeadControlPanel;
@@ -119,7 +120,7 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
             }else if(tag.equals(Constant.FRAGMENT_FLAG_ORDER)){
                 f = new OrderFragment();
             }else if(tag.equals(Constant.FRAGMENT_FLAG_MINE)){
-                f = new HomeFragment();
+                f = new MineFragment();
             }
         }
         return f;
