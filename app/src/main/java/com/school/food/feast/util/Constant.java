@@ -26,4 +26,9 @@ public class Constant {
 	public static final String FRAGMENT_FLAG_ORDER = "订单";
 	public static final String FRAGMENT_FLAG_MINE = "我的";
 
+
+	public static class REQUESTCODE {
+		public static int LOGINACTIVITY = 10;
+	}
+
 }

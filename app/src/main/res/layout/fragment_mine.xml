@@ -9,8 +9,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/unlogin_layout"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
+            android:visibility="gone"
             android:gravity="center">
             <Button
                 android:id="@+id/login_btn"
@@ -19,6 +21,28 @@
                 android:text="马上登录"
                 android:textColor="@color/login_line"
                 android:background="@drawable/login_line"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/login_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:src="@drawable/mine" />
+            <TextView
+                android:id="@+id/phoneNum"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="20sp"/>
         </LinearLayout>
         <View
             android:id="@+id/bottom_line"

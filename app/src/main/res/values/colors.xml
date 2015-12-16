@@ -15,4 +15,5 @@
     <color name="tab_check_bg">#FFA129</color>
     <color name="tab_un_check_bg">#E6E6E7</color>
     <color name="login_line">#FF6900</color>
+    <color name="top_line">#DDDDDD</color>
 </resources>

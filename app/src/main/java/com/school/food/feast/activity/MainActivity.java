@@ -1,5 +1,6 @@
 package com.school.food.feast.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -189,5 +190,13 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment f = fragmentManager.findFragmentByTag(currFragTag);
+        /*然后在碎片中调用重写的onActivityResult方法*/
+        f.onActivityResult(requestCode, resultCode, data);
     }
 }
