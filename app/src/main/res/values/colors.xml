@@ -16,4 +16,7 @@
     <color name="tab_un_check_bg">#E6E6E7</color>
     <color name="login_line">#FF6900</color>
     <color name="top_line">#DDDDDD</color>
+    <color name="maishi_bg">#B7C300</color>
+    <color name="waimai_bg">#FF9900</color>
+    <color name="dmf_bg">#00CCFF</color>
 </resources>
