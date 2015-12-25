@@ -11,6 +11,11 @@ import cn.bmob.v3.BmobUser;
  */
 public class UserServices{
 
+
+   public static User getUser(Context mContext){
+        return BmobUser.getCurrentUser(mContext, User.class);
+    }
+
     public static String getPhoneNum(Context mContext){
         return (String) BmobUser.getObjectByKey(mContext, "mobilePhoneNumber");
     }

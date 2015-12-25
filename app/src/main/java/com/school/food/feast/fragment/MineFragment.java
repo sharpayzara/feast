@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.school.food.feast.R;
 import com.school.food.feast.activity.LoginActivity;
+import com.school.food.feast.activity.PasswordActivity;
 import com.school.food.feast.services.UserServices;
 import com.school.food.feast.util.Constant;
 
@@ -25,6 +27,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 	Button login_btn;
 	View root;
 	TextView phoneNum;
+	RelativeLayout payPassword;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		root =  inflater.inflate(R.layout.fragment_mine, container, false);
@@ -35,6 +38,8 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 	}
 
 	private void initUI(){
+		payPassword = (RelativeLayout) root.findViewById(R.id.payPassword);
+		payPassword.setOnClickListener(this);
 		login_btn = (Button) root.findViewById(R.id.login_btn);
 		unlogin_layout = (LinearLayout) root.findViewById(R.id.unlogin_layout);
 		login_layout = (LinearLayout) root.findViewById(R.id.login_layout);
@@ -54,6 +59,10 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 		if(v == login_btn){
 			Intent intent = new Intent(mContext, LoginActivity.class);
 			((Activity)mContext).startActivityForResult(intent, 1);
+		}
+		if(v == payPassword){
+			Intent intent = new Intent(mContext, PasswordActivity.class);
+			mContext.startActivity(intent);
 		}
 	}
 
