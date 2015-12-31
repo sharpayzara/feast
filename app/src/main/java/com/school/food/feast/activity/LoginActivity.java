@@ -12,10 +12,10 @@ import com.school.food.feast.entity.User;
 import com.school.food.feast.util.Constant;
 
 import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.RequestSMSCodeListener;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.VerifySMSCodeListener;
 
 public class LoginActivity extends CommonHeadPanelActivity implements View.OnClickListener{
 
@@ -64,12 +64,14 @@ public class LoginActivity extends CommonHeadPanelActivity implements View.OnCli
             requestSmsCode();
         }
         if(v == loginBtn){
-            verifySmsCode();
+            //signOrLogin();
+            setResult(Constant.REQUESTCODE.LOGINACTIVITY);
+            finish();
         }
     }
 
 
-    private void verifySmsCode(){
+   /* private void verifySmsCode(){
 
         if(!TextUtils.isEmpty(phoneNum.getText().toString())&&!TextUtils.isEmpty(verifyNum.getText().toString())){
             BmobSMS.verifySmsCode(this,phoneNum.getText().toString(),verifyNum.getText().toString(), new VerifySMSCodeListener() {
@@ -86,28 +88,20 @@ public class LoginActivity extends CommonHeadPanelActivity implements View.OnCli
         }else{
             toast("请输入手机号和验证码");
         }
-    }
+    }*/
 
-    private void testSignUp() {
-        final User myUser = new User();
-        myUser.setUsername(phoneNum.getText().toString());
-        myUser.setPassword("000000");
-        myUser.setMobilePhoneNumber(phoneNum.getText().toString());
-        myUser.signUp(this, new SaveListener() {
-
+    private void signOrLogin() {
+        BmobUser.signOrLoginByMobilePhone(this, phoneNum.getText().toString(), verifyNum.getText().toString(),new LogInListener<User>() {
             @Override
-            public void onSuccess() {
+            public void done(User user, BmobException e) {
                 // TODO Auto-generated method stub
-                toast("注册成功:" + myUser.getMobilePhoneNumber() + "-"
-                        + "-" + myUser.getSessionToken() );
-                setResult(Constant.REQUESTCODE.LOGINACTIVITY);
-                finish();
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                // TODO Auto-generated method stub
-                toast("注册失败:" + msg);
+                if (user != null) {
+                    toast("登录成功");
+                    /*setResult(Constant.REQUESTCODE.LOGINACTIVITY);
+                    finish();*/
+                } else {
+                    toast("验证失败");
+                }
             }
         });
     }

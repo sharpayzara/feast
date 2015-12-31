@@ -2,6 +2,7 @@ package com.school.food.feast.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.school.food.feast.R;
 import com.school.food.feast.adapter.OrderPagerAdapter;
+import com.school.food.feast.util.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +58,10 @@ public class OrderFragment extends Fragment implements
 			fragments.add(new CompleteFragment());
 		}
 		viewPager = (ViewPager) root.findViewById(R.id.pager);
-		adapter = new OrderPagerAdapter(this.getFragmentManager(), fragments);
+		adapter = new OrderPagerAdapter(getChildFragmentManager(), fragments);
 		viewPager.setAdapter(adapter);
 		viewPager.setOffscreenPageLimit(fragments.size() - 1);
 		viewPager.setOnPageChangeListener(this);
-
 		unCompleteIcon = (ImageView) root.findViewById(R.id.uncomplete_icon);
 		completeIcon = (ImageView) root.findViewById(R.id.complete_icon);
 	}
@@ -109,6 +110,18 @@ public class OrderFragment extends Fragment implements
 				break;
 			default:
 				break;
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == Constant.REQUESTCODE.LOGINACTIVITY){
+			fragments.clear();
+			fragments.add(new UnCompleteFragment());
+			fragments.add(new CompleteFragment());
+			fragments.add(new CompleteFragment());
+			adapter.notifyDataSetChanged();
 		}
 	}
 }

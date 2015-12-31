@@ -39,7 +39,6 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         return true;
     }
     private void initUI(){
@@ -153,11 +152,11 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
         }
         headPanel.getmRightTitle().setVisibility(View.INVISIBLE);
         //把上一个fragment detach掉
- /*       if(currFragTag != null && !currFragTag.equals("")){
+        if(currFragTag != null && !currFragTag.equals("")){
             detachFragment(getFragment(currFragTag));
         }
-        attachFragment(R.id.fragment_content, getFragment(tag), tag);*/
-        if(currFragTag == null || currFragTag.equals("")){
+        attachFragment(R.id.fragment_content, getFragment(tag), tag);
+       /* if(currFragTag == null || currFragTag.equals("")){
             fragmentTransaction.add(R.id.fragment_content, getFragment(tag), tag);
         }else{
             if (!getFragment(tag).isAdded()) { // 先判断是否被add过
@@ -165,7 +164,7 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
             } else {
                 fragmentTransaction.hide(getFragment(currFragTag)).show(getFragment(tag)); // 隐藏当前的fragment，显示下一个
             }
-        }
+        }*/
 
       //  mContent = to;
         commitTransactions( tag);
@@ -199,4 +198,5 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
         /*然后在碎片中调用重写的onActivityResult方法*/
         f.onActivityResult(requestCode, resultCode, data);
     }
+
 }

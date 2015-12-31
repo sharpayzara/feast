@@ -98,6 +98,7 @@
                 </LinearLayout>-->
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/dmf_layout"
                 android:layout_width="0dp"
                 android:layout_marginLeft="5dp"
                 android:layout_height="match_parent"

@@ -1,7 +1,8 @@
 package com.school.food.feast.util;
 
 public class Constant {
-	
+	public static final String APPID = "7ff3b5ddaf309007e16c13b8fafc1fd1";
+
 	public static final String Preferences_user= "user";
 	public static final String Preferences_username = "username";
 	public static final String Preferences_password = "password";

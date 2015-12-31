@@ -1,6 +1,8 @@
 package com.school.food.feast.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.school.food.feast.R;
+import com.school.food.feast.activity.LoginActivity;
 import com.school.food.feast.adapter.OrderQueryListAdapter;
 import com.school.food.feast.entity.Order;
 import com.school.food.feast.services.UserServices;
@@ -30,7 +33,6 @@ public class CompleteFragment extends Fragment {
 	private MaterialRefreshLayout materialRefreshLayout;
 	private List<Order> list = new ArrayList<Order>();
 	private OrderQueryListAdapter mAdapter;
-	int i = 110010;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
@@ -41,6 +43,13 @@ public class CompleteFragment extends Fragment {
 			initData();
 		}else{
 			root  = inflater.inflate(R.layout.unlogin_fragment, null);
+			root.findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, LoginActivity.class);
+					((Activity)mContext).startActivityForResult(intent, 1);
+				}
+			});
 		}
 
 		return root;
@@ -70,4 +79,5 @@ public class CompleteFragment extends Fragment {
 		//OrderServices.addOrder(mContext,order);
 		list.add(order);
 	}
+
 }

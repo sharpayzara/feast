@@ -15,7 +15,6 @@ import android.widget.Scroller;
 
 import com.school.food.feast.R;
 import com.school.food.feast.adapter.AdColumnAdapter;
-import com.school.food.feast.util.ViewPagerTransformer;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -66,8 +65,8 @@ public class AdColumnFrame implements OnPageChangeListener {
 		scroller = new ViewPagerScroller(mContext);
 		scroller.setScrollDuration(2000);
         scroller.initViewPagerScroll(mViewpager);
-		mViewpager.setOnPageChangeListener(this);
-		mViewpager.setPageTransformer(true, new ViewPagerTransformer());
+		//mViewpager.setOnPageChangeListener(this);
+		//mViewpager.setPageTransformer(true, new ViewPagerTransformer());
 		initDots();
 		initViewPager();
 	}

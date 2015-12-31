@@ -8,22 +8,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.school.food.feast.util.Constant;
+
 import cn.bmob.v3.Bmob;
 
 public class SplashActivity extends Activity {
-
-    public static String APPID = "7ff3b5ddaf309007e16c13b8fafc1fd1";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
-        Bmob.initialize(this, APPID);
+        Bmob.initialize(this, Constant.APPID);
 		boolean mFirst = isFirstEnter(SplashActivity.this,SplashActivity.this.getClass().getName());
         if(mFirst)
         	mHandler.sendEmptyMessage(SWITCH_GUIDACTIVITY);
-        else
-        	mHandler.sendEmptyMessage(SWITCH_MAINACTIVITY);
+            else
+                mHandler.sendEmptyMessage(SWITCH_MAINACTIVITY);
         }
 
 	//****************************************************************
