@@ -1,6 +1,7 @@
 package com.school.food.feast.activity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import com.school.food.feast.R;
 import com.school.food.feast.activity.base.CommonHeadPanelActivity;
 import com.school.food.feast.entity.User;
 import com.school.food.feast.util.Constant;
+import com.school.food.feast.util.TimeCountUtil;
 
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
@@ -21,6 +23,7 @@ public class LoginActivity extends CommonHeadPanelActivity implements View.OnCli
 
     EditText phoneNum,verifyNum;
     Button obtainVerify,loginBtn;
+    CountDownTimer timeCountUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,9 @@ public class LoginActivity extends CommonHeadPanelActivity implements View.OnCli
     }
 
     private void requestSmsCode(){
-        if(!TextUtils.isEmpty(phoneNum.getText().toString())){
+        if(!TextUtils.isEmpty(phoneNum.getText().toString()) || phoneNum.getText().toString().length() == 11){
+            timeCountUtil = new TimeCountUtil(this, 60000, 1000, obtainVerify);
+            timeCountUtil.start();
             BmobSMS.requestSMSCode(this, phoneNum.getText().toString(), "注册模板", new RequestSMSCodeListener() {
                 @Override
                 public void done(Integer smsId, BmobException ex) {

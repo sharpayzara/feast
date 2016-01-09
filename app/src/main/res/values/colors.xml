@@ -23,4 +23,6 @@
     <color name="pay_btn_bg">#0193FD</color>
     <color name="pay_btn_on_bg">#1A48FF</color>
     <color name="red">#F20F0B</color>
+    <color name="duck_bg">#464A4C</color>
+
 </resources>

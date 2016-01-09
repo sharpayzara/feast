@@ -24,7 +24,7 @@ public class BottomControlPanel extends RelativeLayout implements View.OnClickLi
 	private List<ImageText> viewList = new ArrayList<ImageText>();
 
 	public interface BottomPanelCallback{
-		public void onBottomPanelClick(int itemId);
+		void onBottomPanelClick(int itemId);
 	}
 
 	public BottomControlPanel(Context context, AttributeSet attrs) {

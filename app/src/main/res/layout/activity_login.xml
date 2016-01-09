@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:inputType="number"
             android:hint="请输入手机号码"
             android:textSize="15sp"
             android:layout_marginLeft="10dp"/>
@@ -64,6 +65,7 @@
             android:background="@null"
             android:hint="请输入验证码"
             android:textSize="15sp"
+            android:inputType="number"
             android:layout_toRightOf="@id/pwd_iv"
             android:layout_toLeftOf="@id/obtain_verify"
             android:layout_marginLeft="10dp"/>
@@ -78,7 +80,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="登录"
+        android:text="点击登录"
         android:textColor="@color/white"
         android:background="@drawable/login_register_bg"></Button>
 
