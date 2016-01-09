@@ -14,7 +14,7 @@
     <LinearLayout
         android:id="@+id/left_btn"
         android:layout_width="50dp"
-        android:visibility="gone"
+        android:background="@drawable/back_selector"
         android:layout_height="fill_parent">
         <Button
             android:layout_width="12dp"
@@ -22,7 +22,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/back_icon"
             android:textSize="15sp" />
     </LinearLayout>

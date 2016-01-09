@@ -5,6 +5,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="confirm_check_bg">#979797</color>
+    <color name="back_check_bg">#BA6416</color>
     <color name="move_check_bg">#DBDBDB</color>
     <color name="tab_1">#747474</color>
     <color name="bg_line">#E5E5E5</color>
@@ -16,6 +17,7 @@
     <color name="tab_check_bg">#FFA129</color>
     <color name="tab_un_check_bg">#E6E6E7</color>
     <color name="login_line">#FF6900</color>
+    <color name="head_bg">#E57D1E</color>
     <color name="top_line">#DDDDDD</color>
     <color name="maishi_bg">#B7C300</color>
     <color name="waimai_bg">#FF9900</color>
@@ -24,5 +26,6 @@
     <color name="pay_btn_on_bg">#1A48FF</color>
     <color name="red">#F20F0B</color>
     <color name="duck_bg">#464A4C</color>
+    <color name="wm_line">#DFDFDF</color>
 
 </resources>

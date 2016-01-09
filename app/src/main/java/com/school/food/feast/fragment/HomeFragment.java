@@ -14,13 +14,14 @@ import android.widget.RelativeLayout;
 import com.bmob.pay.tool.BmobPay;
 import com.school.food.feast.R;
 import com.school.food.feast.activity.PayActivity;
+import com.school.food.feast.activity.TakeAwayActivity;
 import com.school.food.feast.layout.AdColumnFrame;
 import com.school.food.feast.util.Constant;
 import com.school.food.feast.util.SizeUtils;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
 	LayoutInflater inflater;
-	RelativeLayout adLayout;
+	RelativeLayout adLayout,preorderLayout,waimaiLayout;
 	Context mContext;
 	LinearLayout adcolumnLayout;
 	RelativeLayout dmf_layout;
@@ -40,7 +41,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 	private void initUI() {
 		dmf_layout = (RelativeLayout) root.findViewById(R.id.dmf_layout);
-        dmf_layout.setOnClickListener(this);
+		preorderLayout = (RelativeLayout) root.findViewById(R.id.preorder_layout);
+		waimaiLayout = (RelativeLayout) root.findViewById(R.id.waimai_layout);
+		dmf_layout.setOnClickListener(this);
+		preorderLayout.setOnClickListener(this);
+		waimaiLayout.setOnClickListener(this);
 		initAdColumn();
 	}
 
@@ -58,6 +63,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 		if(v == dmf_layout){
             Intent intent = new Intent(mContext, PayActivity.class);
             mContext.startActivity(intent);
+		}
+		else if(v == preorderLayout){
+		}
+		else if(v == waimaiLayout){
+			Intent intent = new Intent(mContext, TakeAwayActivity.class);
+			mContext.startActivity(intent);
 		}
 	}
 }

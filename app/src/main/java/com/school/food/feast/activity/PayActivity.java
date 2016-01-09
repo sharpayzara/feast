@@ -37,6 +37,7 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
         prize_et = (EditText) findViewById(R.id.prize_et);
         zfb_radio = (RadioButton) findViewById(R.id.zfb_btn);
         ye_radio = (RadioButton) findViewById(R.id.ye_btn);
+        ye_radio.setChecked(true);
         pay_btn.setOnClickListener(this);
     }
 

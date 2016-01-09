@@ -42,14 +42,20 @@ public class OrderFragment extends Fragment implements
 		root =  inflater.inflate(R.layout.fragment_order, container, false);
 		mContext = getActivity();
 		this.inflater = inflater;
-		initUI();
 		return root;
+	}
+
+	@Override
+	public void onResume() {
+		initUI();
+		super.onResume();
 	}
 
 	private void initUI() {
 		radioGroup = (RadioGroup) root.findViewById(R.id.radioGroup);
 		radio0 = (RadioButton) root.findViewById(R.id.radio0);
 		radio1 = (RadioButton) root.findViewById(R.id.radio1);
+		radio0.setChecked(true);
 		radioGroup.setOnCheckedChangeListener(this);
 
 		if(fragments == null){
@@ -60,6 +66,7 @@ public class OrderFragment extends Fragment implements
 		viewPager = (ViewPager) root.findViewById(R.id.pager);
 		adapter = new OrderPagerAdapter(getChildFragmentManager(), fragments);
 		viewPager.setAdapter(adapter);
+		viewPager.setCurrentItem(0);
 		viewPager.setOffscreenPageLimit(fragments.size() - 1);
 		viewPager.setOnPageChangeListener(this);
 		unCompleteIcon = (ImageView) root.findViewById(R.id.uncomplete_icon);

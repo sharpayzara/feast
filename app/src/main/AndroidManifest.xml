@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -56,6 +57,10 @@
             android:name="com.bmob.pay.tool.PayActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name=".activity.TakeAwayActivity"
+            android:screenOrientation="portrait"  >
+        </activity>
     </application>
 
 </manifest>

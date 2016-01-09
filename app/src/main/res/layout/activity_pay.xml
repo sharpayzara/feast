@@ -79,6 +79,7 @@
                    <RadioButton
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
+                       android:button="@drawable/sex_radio_selector"
                        android:id="@+id/ye_btn"
                        android:text="账户余额"
                        android:checked="true"/>
@@ -87,6 +88,7 @@
                     android:layout_height="wrap_content" />
                    <RadioButton
                        android:id="@+id/zfb_btn"
+                       android:button="@drawable/sex_radio_selector"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="支付宝"/>

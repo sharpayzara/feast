@@ -19,10 +19,17 @@ public class HeadControlPanel extends RelativeLayout{
 	private static final float middle_title_size = 20f; 
 	private static final float right_title_size = 17f; 
 	private static final int default_background_color = Color.rgb(229,125,30);
- 
+
+	public HeadControlPanel(Context context) {
+		super(context);
+	}
+
 	public HeadControlPanel(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
+	}
+
+	public HeadControlPanel(Context context, AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
 	}
 
 	@Override
@@ -57,5 +64,5 @@ public class HeadControlPanel extends RelativeLayout{
 	public void setmRightTitle(Button mRightTitle) {
 		this.mRightTitle = mRightTitle;
 	}
-	
+
 }

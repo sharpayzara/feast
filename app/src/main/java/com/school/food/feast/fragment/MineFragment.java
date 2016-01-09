@@ -55,9 +55,12 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 			login_layout.setVisibility(View.VISIBLE);
 			unlogin_layout.setVisibility(View.GONE);
 			phoneNum.setText(UserServices.getPhoneNum(mContext));
+			logOut.setVisibility(View.VISIBLE);
 		}else{
 			login_layout.setVisibility(View.GONE);
 			unlogin_layout.setVisibility(View.VISIBLE);
+			logOut.setVisibility(View.GONE);
+
 		}
 
 	}
@@ -96,6 +99,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 			unlogin_layout.setVisibility(View.GONE);
 			login_layout.setVisibility(View.VISIBLE);
 			phoneNum.setText(UserServices.getPhoneNum(mContext));
+            logOut.setVisibility(View.VISIBLE);
 		}
 	}
 }

@@ -69,9 +69,7 @@ public class LoginActivity extends CommonHeadPanelActivity implements View.OnCli
             requestSmsCode();
         }
         if(v == loginBtn){
-            //signOrLogin();
-            setResult(Constant.REQUESTCODE.LOGINACTIVITY);
-            finish();
+            signOrLogin();
         }
     }
 
@@ -102,8 +100,8 @@ public class LoginActivity extends CommonHeadPanelActivity implements View.OnCli
                 // TODO Auto-generated method stub
                 if (user != null) {
                     toast("登录成功");
-                    /*setResult(Constant.REQUESTCODE.LOGINACTIVITY);
-                    finish();*/
+                    setResult(Constant.REQUESTCODE.LOGINACTIVITY);
+                    finish();
                 } else {
                     toast("验证失败");
                 }

@@ -14,7 +14,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
-            android:checked="true"
             android:background="@drawable/tab_bg_selector"
             android:gravity="center"
             android:tag="0"
