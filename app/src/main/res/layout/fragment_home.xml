@@ -21,7 +21,7 @@
             android:id="@+id/preorder_layout"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_margin="10dp"
+            android:layout_margin="7dp"
             android:gravity="center"
             android:background="@color/maishi_bg">
             <ImageView
@@ -60,15 +60,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginBottom="7dp"
             android:layout_weight="1">
             <RelativeLayout
                 android:id="@+id/waimai_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="3dp"
                 android:background="@color/waimai_bg"
                 android:gravity="center"
                 android:layout_weight="1">
@@ -102,7 +102,7 @@
             <RelativeLayout
                 android:id="@+id/dmf_layout"
                 android:layout_width="0dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="4dp"
                 android:layout_height="match_parent"
                 android:background="@color/dmf_bg"
                 android:gravity="center"

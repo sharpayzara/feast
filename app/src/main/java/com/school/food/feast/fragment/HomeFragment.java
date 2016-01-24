@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.bmob.pay.tool.BmobPay;
 import com.school.food.feast.R;
+import com.school.food.feast.activity.ChannelActivity;
 import com.school.food.feast.activity.PayActivity;
 import com.school.food.feast.activity.TakeAwayActivity;
 import com.school.food.feast.layout.AdColumnFrame;
@@ -65,6 +66,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             mContext.startActivity(intent);
 		}
 		else if(v == preorderLayout){
+			Intent intent = new Intent(mContext, ChannelActivity.class);
+			mContext.startActivity(intent);
 		}
 		else if(v == waimaiLayout){
 			Intent intent = new Intent(mContext, TakeAwayActivity.class);
