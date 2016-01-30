@@ -50,7 +50,7 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
 
     private void initData() {
         BmobQuery<Menu> bmobQuery = new BmobQuery<Menu>();
-        bmobQuery.addWhereEqualTo("seqId",chooseBusiness.getId()+"");
+        bmobQuery.addWhereEqualTo("seqId",chooseBusiness.getId());
         bmobQuery.findObjects(this, new FindListener<Menu>() {
             @Override
             public void onSuccess(List<Menu> list) {
