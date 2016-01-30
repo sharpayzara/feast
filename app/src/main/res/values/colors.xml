@@ -27,5 +27,8 @@
     <color name="red">#F20F0B</color>
     <color name="duck_bg">#464A4C</color>
     <color name="wm_line">#DFDFDF</color>
-
+    <color name="pink_color">#FEF6E1</color>
+    <color name="menu_type_color">#F1F2F4</color>
+    <color name="menu_type_line">#D8D8D9</color>
+    <color name="menu_type_text_line">#474747</color>
 </resources>

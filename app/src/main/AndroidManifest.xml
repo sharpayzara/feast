@@ -26,6 +26,10 @@
             android:screenOrientation="portrait"  >
         </activity>
         <activity
+            android:name=".activity.ChannelActivity"
+            android:screenOrientation="portrait"  >
+        </activity>
+        <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"  >
         </activity>
@@ -38,7 +42,7 @@
             android:screenOrientation="portrait"  >
         </activity>
         <activity
-            android:name=".activity.ChannelActivity"
+            android:name=".activity.MenuChooseActivity"
             android:screenOrientation="portrait"  >
         </activity>
         <activity

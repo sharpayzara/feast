@@ -21,14 +21,17 @@
                 <ImageView
                     android:id="@+id/cxm_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/cxm_icon"/>
                 <ImageView
                     android:id="@+id/dxm_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/dxm_icon"/>
                 <ImageView
                     android:id="@+id/llx_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/llx_icon"/>
             </LinearLayout>
             <LinearLayout
@@ -38,14 +41,17 @@
                 <ImageView
                     android:id="@+id/xp_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/xp_icon"/>
                 <ImageView
                     android:id="@+id/hls_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/hls_icon"/>
                 <ImageView
                     android:id="@+id/lgj_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/lgj_icon"/>
             </LinearLayout>
             <LinearLayout
@@ -55,10 +61,12 @@
                 <ImageView
                     android:id="@+id/hzd_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/hzd_icon"/>
                 <ImageView
                     android:id="@+id/yyys_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/yyys_icon"/>
             </LinearLayout>
             <LinearLayout
@@ -68,10 +76,12 @@
                 <ImageView
                     android:id="@+id/hzw_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/hzw_icon"/>
                 <ImageView
                     android:id="@+id/hhmc_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/hhmc_icon"/>
             </LinearLayout>
             <LinearLayout
@@ -81,6 +91,7 @@
                 <ImageView
                     android:id="@+id/gg_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/gg_icon"/>
             </LinearLayout>
             <LinearLayout
@@ -90,10 +101,12 @@
                 <ImageView
                     android:id="@+id/bfg_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/bfg_icon"/>
                 <ImageView
                     android:id="@+id/hhlr_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/hhlr_icon"/>
             </LinearLayout>
             <LinearLayout
@@ -103,10 +116,12 @@
                 <ImageView
                     android:id="@+id/xael_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/xael_icon"/>
                 <ImageView
                     android:id="@+id/ysys_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/ysys_icon"/>
             </LinearLayout>
             <LinearLayout
@@ -116,10 +131,12 @@
                 <ImageView
                     android:id="@+id/hgd_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/hgd_icon"/>
                 <ImageView
                     android:id="@+id/ky_iv"
                     style="@style/channel"
+                    android:background="@drawable/order_click_selector"
                     android:src="@mipmap/ky_icon"/>
             </LinearLayout>
         </LinearLayout>
