@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.school.food.feast.R;
+import com.school.food.feast.activity.MenuChooseActivity;
 import com.school.food.feast.entity.Dish;
 import com.school.food.feast.entity.PreOrder;
 
@@ -101,7 +102,7 @@ public class MenuSectionedAdapter extends SectionedBaseAdapter {
                     viewHolder.check_num.setText((Integer.parseInt(viewHolder.check_num.getText().toString())+1)+"");
                     preOrderMap.get(section+"-"+position).get(position).setDishNum(Integer.parseInt(viewHolder.check_num.getText().toString()));
                 }
-
+                ((MenuChooseActivity)mContext).calculateTotalMoney();
             }
         });
         viewHolder.subtract_tv.setOnClickListener(new OnClickListener() {
@@ -116,7 +117,7 @@ public class MenuSectionedAdapter extends SectionedBaseAdapter {
                     viewHolder.check_num.setText((Integer.parseInt(viewHolder.check_num.getText().toString())-1)+"");
                     preOrderMap.get(section+"-"+position).get(position).setDishNum(Integer.parseInt(viewHolder.check_num.getText().toString()));
                 }
-
+                ((MenuChooseActivity)mContext).calculateTotalMoney();
             }
         });
         return convertView;
@@ -124,9 +125,6 @@ public class MenuSectionedAdapter extends SectionedBaseAdapter {
 
    @Override
     public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
-
-
-
         LinearLayout layout = null;
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

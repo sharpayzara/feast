@@ -24,7 +24,7 @@ public class AdColumnFrame implements OnPageChangeListener {
 	private static Context mContext;// 上下文
 
 	private int width;
-	
+
 	private int newWidth;
 
 	private int padding;
@@ -45,32 +45,32 @@ public class AdColumnFrame implements OnPageChangeListener {
 	private final long delay = 4 * 1000;
 
 	private final int AUTO = 0;
-	
+
 	private static AdColumnFrame obj = null;
-	
+
 	private static int flagNum = 0;
-	
+
 	private static View mView;
-	
+
 	private ViewPagerScroller scroller;
-	
+
 	private AdColumnFrame(Context context, View view){
 		mContext = context;
 		mView = view;
 		width = context.getResources().getDisplayMetrics().widthPixels;
 		newWidth = (int) (divideWidth(width, 1080, 6) * 17);
-		padding = (int) (divideWidth(width, 1080, 6) * 9);  
+		padding = (int) (divideWidth(width, 1080, 6) * 9);
 		mViewpager = (ViewPager) view.findViewById(R.id.viewPagers);
 		layoutDots = (LinearLayout) view.findViewById(R.id.dotLayout);
 		scroller = new ViewPagerScroller(mContext);
 		scroller.setScrollDuration(2000);
         scroller.initViewPagerScroll(mViewpager);
-		//mViewpager.setOnPageChangeListener(this);
+		mViewpager.setOnPageChangeListener(this);
 		//mViewpager.setPageTransformer(true, new ViewPagerTransformer());
 		initDots();
 		initViewPager();
 	}
- 
+
 	public static AdColumnFrame getInstence(Context context,View view){
 		if(obj == null){
 			obj = new AdColumnFrame(context,view);
@@ -80,7 +80,7 @@ public class AdColumnFrame implements OnPageChangeListener {
 		}
 		return obj;
 	}
-	 
+
 	public double divideWidth(int screenWidth, int picWidth, int retainValue) {
 		BigDecimal screenBD = new BigDecimal(Double.toString(screenWidth));
 		BigDecimal picBD = new BigDecimal(Double.toString(picWidth));
@@ -90,9 +90,9 @@ public class AdColumnFrame implements OnPageChangeListener {
 
 	/**
 	 * @author
-	 * 
+	 *
 	 *         初始化ViewPager的底部小点
-	 * 
+	 *
 	 * */
 	private void initDots() {
 
@@ -127,9 +127,9 @@ public class AdColumnFrame implements OnPageChangeListener {
 
 	/**
 	 * @author
-	 * 
+	 *
 	 *         初始化ViewPager
-	 * 
+	 *
 	 * */
 	private void initViewPager() {
 
@@ -160,7 +160,7 @@ public class AdColumnFrame implements OnPageChangeListener {
 		if(flagNum != 0){
 			mViewpager.setCurrentItem(flagNum);
 		}else{
-			mViewpager.setCurrentItem(mImageRes.length * 50);	
+			mViewpager.setCurrentItem(mImageRes.length * 50);
 		}
 		mHandler.sendEmptyMessageDelayed(AUTO, delay);
 	}
@@ -208,10 +208,10 @@ public class AdColumnFrame implements OnPageChangeListener {
 
 	/**
 	 * @author
-	 * 
+	 *
 	 *         设置ViewPager当前的底部小点
-	 * 
-	 * 
+	 *
+	 *
 	 * */
 	private void setCurrentDot(int currentPosition) {
 

@@ -61,7 +61,7 @@ public class ChannelActivity extends CommonHeadPanelActivity implements View.OnC
         gg_iv = (ImageView) findViewById(R.id.gg_iv);
         gg_iv.setTag(new BusinessEntity(11,"干锅"));
         bfg_iv = (ImageView) findViewById(R.id.bfg_iv);
-        gg_iv.setTag(new BusinessEntity(12,"避风港"));
+        bfg_iv.setTag(new BusinessEntity(12,"避风港"));
         hhlr_iv = (ImageView) findViewById(R.id.hhlr_iv);
         hhlr_iv.setTag(new BusinessEntity(13,"回味卤肉"));
         xael_iv = (ImageView) findViewById(R.id.xael_iv);

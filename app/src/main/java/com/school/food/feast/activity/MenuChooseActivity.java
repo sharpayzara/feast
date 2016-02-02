@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.school.food.feast.R;
 import com.school.food.feast.activity.base.CommonHeadPanelActivity;
 import com.school.food.feast.adapter.MenuSectionedAdapter;
@@ -38,7 +40,8 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
     private List leftList;
     private Map<Integer,List<Dish>> rightMap;
     private Map<String,Map<Integer,PreOrder>> preOrderMap;
-
+    private TextView total_money_tv;
+    private List<PreOrder> preOrderList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_menu);
@@ -49,6 +52,7 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
     }
 
     private void initData() {
+        preOrderList = new ArrayList<>();
         BmobQuery<Menu> bmobQuery = new BmobQuery<Menu>();
         bmobQuery.addWhereEqualTo("seqId",chooseBusiness.getId());
         bmobQuery.findObjects(this, new FindListener<Menu>() {
@@ -73,6 +77,7 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
     }
 
     private void initUI() {
+        total_money_tv = (TextView) findViewById(R.id.total_money);
         chooseBusiness = (BusinessEntity) getIntent().getSerializableExtra("chooseEntity");
         setHeadTitle(chooseBusiness.getName());
         showBackBtn();
@@ -147,4 +152,17 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
 
     }
 
+    public void calculateTotalMoney(){
+        preOrderList.clear();
+        Double tempTotalMoney = 0d;
+        for(String key : preOrderMap.keySet()){
+                for(Integer i : preOrderMap.get(key).keySet()){
+                    preOrderList.add(preOrderMap.get(key).get(i));
+                }
+        }
+        for(PreOrder order : preOrderList){
+            tempTotalMoney += (order.getDishValue() * order.getDishNum());
+        }
+        total_money_tv.setText(tempTotalMoney+"元");
+    }
 }
