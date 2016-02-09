@@ -83,7 +83,7 @@
                 android:background="@drawable/login_register_bg"
                 android:textColor="@color/white"
                 android:textSize="15sp"
-                android:text="去付款"></Button>
+                android:text="下一步"></Button>
         </RelativeLayout>
         <ImageView
             android:layout_above="@id/submit_llt"

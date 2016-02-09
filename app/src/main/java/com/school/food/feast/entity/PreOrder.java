@@ -1,11 +1,13 @@
 package com.school.food.feast.entity;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 
 /**
  * Created by Administrator on 2015/12/16.
  */
-public class PreOrder extends BmobObject {
+public class PreOrder extends BmobObject implements Serializable{
     private String dishName;
     private Double dishValue;
     private Integer dishNum;

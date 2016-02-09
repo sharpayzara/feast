@@ -1,12 +1,14 @@
 package com.school.food.feast.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import com.school.food.feast.entity.MenuType;
 import com.school.food.feast.entity.PreOrder;
 import com.school.food.feast.widget.PinnedHeaderListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +44,7 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
     private Map<Integer,List<Dish>> rightMap;
     private Map<String,Map<Integer,PreOrder>> preOrderMap;
     private TextView total_money_tv;
+    Button submit_btn;
     private List<PreOrder> preOrderList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,8 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
     }
 
     private void initUI() {
+        submit_btn = (Button) findViewById(R.id.submit_btn);
+        submit_btn.setOnClickListener(this);
         total_money_tv = (TextView) findViewById(R.id.total_money);
         chooseBusiness = (BusinessEntity) getIntent().getSerializableExtra("chooseEntity");
         setHeadTitle(chooseBusiness.getName());
@@ -149,7 +155,11 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
 
     @Override
     public void onClick(View v) {
-
+        if(v == submit_btn){
+            Intent intent = new Intent(this,ConfirmOrderActivity.class);
+            intent.putExtra("preOrderList", (Serializable) preOrderList);
+            startActivity(intent);
+        }
     }
 
     public void calculateTotalMoney(){

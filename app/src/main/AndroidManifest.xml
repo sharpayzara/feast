@@ -46,6 +46,11 @@
             android:screenOrientation="portrait"  >
         </activity>
         <activity
+            android:name=".activity.ConfirmOrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+        <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"  >
             <intent-filter>
