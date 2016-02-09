@@ -30,6 +30,7 @@ public class Constant {
 
 	public static class REQUESTCODE {
 		public static int LOGINACTIVITY = 10;
+		public static int DMFRESULT = 11;
 	}
 
 }

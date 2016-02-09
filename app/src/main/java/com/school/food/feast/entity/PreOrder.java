@@ -7,7 +7,7 @@ import cn.bmob.v3.BmobObject;
 /**
  * Created by Administrator on 2015/12/16.
  */
-public class PreOrder extends BmobObject implements Serializable{
+public class PreOrder implements Serializable{
     private String dishName;
     private Double dishValue;
     private Integer dishNum;

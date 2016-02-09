@@ -71,9 +71,11 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
         <activity
+            android:name=".activity.PayPreOrderActivity"
+            android:screenOrientation="portrait"  />
+        <activity
             android:name=".activity.TakeAwayActivity"
-            android:screenOrientation="portrait"  >
-        </activity>
+            android:screenOrientation="portrait"  />
     </application>
 
 </manifest>

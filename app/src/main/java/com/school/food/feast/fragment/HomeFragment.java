@@ -26,7 +26,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 	Context mContext;
 	LinearLayout adcolumnLayout;
 	RelativeLayout dmf_layout;
-
 	private View root;
 
 	@Override

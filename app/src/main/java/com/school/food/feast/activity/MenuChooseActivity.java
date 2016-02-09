@@ -156,6 +156,10 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
     @Override
     public void onClick(View v) {
         if(v == submit_btn){
+            if(preOrderList.size() == 0){
+                toast("请选择菜品");
+                return;
+            }
             Intent intent = new Intent(this,ConfirmOrderActivity.class);
             intent.putExtra("preOrderList", (Serializable) preOrderList);
             startActivity(intent);

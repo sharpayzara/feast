@@ -3,6 +3,7 @@ package com.school.food.feast.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import com.school.food.feast.entity.BusinessEntity;
 import com.school.food.feast.entity.Dish;
 import com.school.food.feast.entity.Menu;
 import com.school.food.feast.entity.MenuType;
+import com.school.food.feast.util.Constant;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,11 +29,13 @@ public class ChannelActivity extends CommonHeadPanelActivity implements View.OnC
             ,hzw_iv,yyys_iv,hhmc_iv,gg_iv,bfg_iv,hhlr_iv,xael_iv,ysys_iv, hgd_iv,ky_iv;
     private Context mContext;
     private Menu menu;
+    String sourceFlag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_channel);
         super.onCreate(savedInstanceState);
         mContext = this;
+        sourceFlag = getIntent().getStringExtra("dmf");
         initUI();
     }
 
@@ -93,37 +97,15 @@ public class ChannelActivity extends CommonHeadPanelActivity implements View.OnC
 
     @Override
     public void onClick(final View v) {
-        Intent intent = new Intent(ChannelActivity.this,MenuChooseActivity.class);
-        intent.putExtra("chooseEntity",(Serializable) v.getTag());
-        startActivity(intent);
-
-
-      /*  final Menu menu = new Menu();
-        menu.setSeqId(1);
-        menu.setBusinessName("丑小面");
-        MenuType type = new MenuType();
-        type.setTypeName("小面");
-        Dish dish = new Dish();
-        dish.setDishName("杂酱面");
-        dish.setDishValue(12.5);
-        List list2 = new ArrayList<Dish>();
-        list2.add(dish);
-
-        type.setDish(list2);
-        List list1 = new ArrayList<MenuType>();
-        list1.add(type);
-
-        menu.setMenuType(list1);
-        menu.save(this, new SaveListener() {
-            @Override
-            public void onSuccess() {
-                Log.e("success", "success");
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Log.e("fail", "fail");
-            }
-        });*/
+        if(!TextUtils.isEmpty(sourceFlag) && sourceFlag.equals("当面付")){
+            Intent intent = new Intent();
+            intent.putExtra("chooseEntity",(Serializable) v.getTag());
+            setResult(Constant.REQUESTCODE.DMFRESULT);
+            finish();
+        }else{
+            Intent intent = new Intent(ChannelActivity.this,MenuChooseActivity.class);
+            intent.putExtra("chooseEntity",(Serializable) v.getTag());
+            startActivity(intent);
+        }
     }
 }

@@ -8,24 +8,24 @@
     <include
         android:id="@+id/head_layout"
         layout="@layout/head_panel_layout" />
-    <ScrollView
+
+    <LinearLayout
         android:layout_below="@id/head_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="80dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:textSize="14sp"
-                android:background="@color/menu_type_color"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="已选择菜品"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="14sp"
+            android:background="@color/menu_type_color"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="已选择菜品"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
             <TableLayout
                 android:id="@+id/order_tlt"
                 android:layout_width="match_parent"
@@ -64,71 +64,85 @@
                         android:text="价格"/>
 
                 </TableRow>
-
             </TableLayout>
-            <LinearLayout
+        </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/menu_type_color">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="14sp"
+                android:text="就餐时间:"/>
+            <TextView
+                android:id="@+id/order_time"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/menu_type_color">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:textSize="14sp"
-                    android:text="就餐时间:"/>
-                <TextView
-                    android:id="@+id/order_time"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center_vertical"
-                    android:textSize="13sp"
-                    android:hint="  提前更早更优惠！"
-                    android:focusable="false"
-                    android:paddingLeft="10dp"
-                    android:background="@drawable/setbar_bg"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/menu_type_color">
-                <TextView
-                    android:id="@+id/yhjg_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:paddingLeft="10dp"
-                    android:text="优惠价格："/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/yhjg_tv"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/red"
-                    android:textSize="15sp"
-                    tools:text="15.6元"/>
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="14sp"
-                    tools:text="已优惠1.6元"/>
-
-            </RelativeLayout>
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:textSize="13sp"
+                android:hint="  提前更早更优惠！"
+                android:focusable="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/setbar_bg"
+                android:layout_height="match_parent" />
         </LinearLayout>
-    </ScrollView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/menu_type_color">
+            <TextView
+                android:id="@+id/yhjg_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="14sp"
+                android:paddingLeft="10dp"
+                android:text="优惠价格："/>
+            <TextView
+                android:id="@+id/discount_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/yhjg_tv"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/red"
+                android:textSize="15sp"
+                tools:text="8.8折"/>
+            <TextView
+                android:id="@+id/hasDiscountValue"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textSize="14sp"
+                tools:text="已优惠1.6元"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/factPayMoney_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/red"
+            android:gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="40dp"
+            tools:text="实付：￥16.6元"></TextView>
+    </LinearLayout>
+
     <Button
         android:id="@+id/pay_btn"
         android:layout_width="match_parent"
