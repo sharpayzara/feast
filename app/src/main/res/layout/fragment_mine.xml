@@ -61,6 +61,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight="1">
             <RelativeLayout
+                android:id="@+id/ye_btn"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
@@ -86,6 +87,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/bg_line" />
             <RelativeLayout
+                android:id="@+id/cz_btn"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:gravity="center"
@@ -110,6 +112,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/bg_line" />
             <RelativeLayout
+                android:id="@+id/cj_btn"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:gravity="center"
@@ -153,7 +156,7 @@
             android:layout_toRightOf="@id/zf_im"
             android:textSize="18sp"
             android:gravity="center"
-            android:text="支付密码"/>
+            android:text="意见反馈"/>
         <ImageView
             android:layout_width="40dp"
             android:layout_height="match_parent"
@@ -199,6 +202,7 @@
         android:layout_height="1dip"
         android:background="@color/bg_line" />
     <RelativeLayout
+        android:id="@+id/check_update"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:gravity="center_vertical"

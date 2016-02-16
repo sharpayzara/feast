@@ -31,4 +31,13 @@
     <color name="menu_type_color">#F1F2F4</color>
     <color name="menu_type_line">#D8D8D9</color>
     <color name="menu_type_text_line">#474747</color>
+    <color name="transparent">#00000000</color>
+    <color name="border_bkg">#FFFFFF</color>
+    <color name="border">#000000</color>
+    <color name="text">#000000</color>
+    <color name="main_bkg">#E3DBCF</color>
+    <color name="button">#FFFFFF</color>
+    <color name="button_disable">#9C8E8E</color>
+    <color name="button_press">#F1F1F1</color>
+    <color name="button_text">#000000</color>
 </resources>

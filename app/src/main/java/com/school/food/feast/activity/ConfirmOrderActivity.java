@@ -61,8 +61,11 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
                 if(tempPitch < discount.getDiscountTime() ){
                     if(discount.getDiscountValue() != 10){
                         discount_tv.setText(discount.getDiscountValue()+"折");
+                    }else{
+                        discount_tv.setText("");
                     }
                     double tempFactPayMoney = totalMoney * discount.getDiscountValue() / 10;
+                    factTotalMoney = tempFactPayMoney;
                     factPayMoney_tv.setText("￥" + df.format(tempFactPayMoney) + "元");
                     hasDiscountValue.setText("优惠" + df.format(totalMoney -  Double.parseDouble(df.format(tempFactPayMoney))) + "元");
                     return;
@@ -75,6 +78,7 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
             double tempFactPayMoney = totalMoney * dis.getDiscountValue() / 10;
             factPayMoney_tv.setText("￥" + tempFactPayMoney + "元");
             hasDiscountValue.setText("优惠" + df.format(totalMoney -  Double.parseDouble(df.format(tempFactPayMoney))) + "元");
+            factTotalMoney = tempFactPayMoney;
             return;
         }
 

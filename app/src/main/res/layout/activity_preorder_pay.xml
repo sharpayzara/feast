@@ -36,9 +36,10 @@
                android:textSize="14sp"
                android:text="账户余额："/>
         <TextView
+            android:id="@+id/balance_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="18元"/>
+            tools:text="18元"/>
        </LinearLayout>
         <LinearLayout
             android:id="@+id/input_layout"
@@ -64,7 +65,7 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
                 tools:text="0.02"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textColor="@color/red"
                 android:background="@null"/>
         </LinearLayout>

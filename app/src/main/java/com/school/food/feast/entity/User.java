@@ -8,6 +8,7 @@ import cn.bmob.v3.BmobUser;
 public class User extends BmobUser {
     private static final long serialVersionUID = 3292304921701053144L;
     private String payPassword;
+    private Double accountMoney;
 
     public String getPayPassword() {
         return payPassword;
@@ -15,5 +16,17 @@ public class User extends BmobUser {
 
     public void setPayPassword(String payPassword) {
         this.payPassword = payPassword;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Double getAccountMoney() {
+        return accountMoney;
+    }
+
+    public void setAccountMoney(Double accountMoney) {
+        this.accountMoney = accountMoney;
     }
 }

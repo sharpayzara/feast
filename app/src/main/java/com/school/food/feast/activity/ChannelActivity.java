@@ -100,7 +100,7 @@ public class ChannelActivity extends CommonHeadPanelActivity implements View.OnC
         if(!TextUtils.isEmpty(sourceFlag) && sourceFlag.equals("当面付")){
             Intent intent = new Intent();
             intent.putExtra("chooseEntity",(Serializable) v.getTag());
-            setResult(Constant.REQUESTCODE.DMFRESULT);
+            setResult(Constant.REQUESTCODE.DMFRESULT,intent);
             finish();
         }else{
             Intent intent = new Intent(ChannelActivity.this,MenuChooseActivity.class);

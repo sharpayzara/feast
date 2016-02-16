@@ -33,4 +33,7 @@ public class Constant {
 		public static int DMFRESULT = 11;
 	}
 
+	public static class URL{
+		public static String shareURL="https://www.baidu.com";
+	}
 }

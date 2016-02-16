@@ -19,13 +19,17 @@ import com.school.food.feast.R;
 import com.school.food.feast.activity.base.CommonHeadPanelActivity;
 import com.school.food.feast.entity.BusinessEntity;
 import com.school.food.feast.entity.PreOrder;
+import com.school.food.feast.entity.User;
 import com.school.food.feast.entity.UserOrder;
 import com.school.food.feast.services.UserServices;
 import com.school.food.feast.util.Constant;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class PayPreOrderActivity extends CommonHeadPanelActivity implements View.OnClickListener{
     private RadioButton zfb_radio,ye_radio;
@@ -34,11 +38,14 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
     private TextView prize_et;
     private ImageView icon_layout;
     private Context mContext;
+    private Double factTotalMoney;
+    private TextView balance_tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_preorder_pay);
         super.onCreate(savedInstanceState);
         BmobPay.init(mContext, Constant.APPID);
+        factTotalMoney = getIntent().getDoubleExtra("factTotalMoney",0);
         mContext = this;
         initUI();
     }
@@ -46,18 +53,25 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
     private void initUI() {
         setHeadTitle("当面付");
         showBackBtn();
+        balance_tv = (TextView) findViewById(R.id.balance_tv);
         icon_layout = (ImageView) findViewById(R.id.icon_layout);
         pay_btn = (Button) findViewById(R.id.pay_btn);
         prize_et = (TextView) findViewById(R.id.prize_et);
+        prize_et.setText(factTotalMoney+"");
         zfb_radio = (RadioButton) findViewById(R.id.zfb_btn);
         ye_radio = (RadioButton) findViewById(R.id.ye_btn);
         ye_radio.setChecked(true);
         pay_btn.setOnClickListener(this);
         icon_layout.setOnClickListener(this);
+        balance_tv.setText(UserServices.getAccountBalance(this)+"元");
     }
 
     @Override
     public void onClick(View v) {
+        if(factTotalMoney == 0){
+            toast("无效金额，付款失败");
+            return;
+        }
         UserOrder order = new UserOrder();
         order.setPhoneNum(UserServices.getPhoneNum(mContext));
         order.setTotalMoney(getIntent().getDoubleExtra("factTotalMoney",0));
@@ -83,12 +97,39 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
             entity = (BusinessEntity) getIntent().getSerializableExtra("chooseEntity");
         }
     }
+
+    public void updateAccount(){
+        final User user = new User();
+        user.setAccountMoney(Double.parseDouble(UserServices.getAccountBalance(this)) - Double.parseDouble(prize_et.getText().toString()));
+        String userObjectId = UserServices.getUser(this).getObjectId();
+        user.update(this, userObjectId, new UpdateListener() {
+
+            @Override
+            public void onSuccess() {
+                createOrder();
+                balance_tv.setText(UserServices.getAccountBalance(mContext) + "元");
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+            }
+        });
+    }
+
+
+    private void createOrder() {
+
+    }
     public void pay(){
         if(TextUtils.isEmpty(prize_et.getText().toString())){
             Toast.makeText(mContext,"金额不能为空，付款失败",Toast.LENGTH_SHORT).show();
         }else{
             if(ye_radio.isChecked()){
-                Toast.makeText(mContext,"账户余额不足",Toast.LENGTH_SHORT).show();
+                if( Double.parseDouble(UserServices.getAccountBalance(this)) < Double.parseDouble(prize_et.getText().toString())){
+                    Toast.makeText(mContext,"账户余额不足",Toast.LENGTH_SHORT).show();
+                }else{
+                    updateAccount();
+                }
             }else if(zfb_radio.isChecked()){
 
                 new BmobPay((Activity) mContext).pay(Double.parseDouble(prize_et.getText().toString()),"菜品",new PayListener(){

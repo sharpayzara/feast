@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/resource_bg">
+    <include
+        android:id="@+id/head_layout"
+        layout="@layout/head_panel_layout" />
+    <EditText
+        android:id="@+id/feedback_tv"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:gravity="start"
+        android:hint="请留下你的宝贵意见和建议，我们会尽快改进"
+        android:layout_height="180dp" />
+
+    <EditText
+        android:id="@+id/phoneNum_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:inputType="number"
+        android:hint="请留下你的手机号码，以便我们回复你"/>
+
+    <Button
+        android:id="@+id/send_btn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="提   交"
+        android:textColor="@color/white"
+        android:background="@drawable/login_register_bg"></Button>
+
+</LinearLayout>

@@ -9,8 +9,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import com.school.food.feast.R;
 import com.school.food.feast.fragment.HomeFragment;
@@ -23,7 +25,7 @@ import com.school.food.feast.util.Constant;
 public class MainActivity extends FragmentActivity implements BottomControlPanel.BottomPanelCallback {
     BottomControlPanel bottomPanel = null;
     HeadControlPanel headPanel = null;
-
+    public long exitTime;
     private FragmentManager fragmentManager = null;
     private FragmentTransaction fragmentTransaction = null;
 
@@ -32,6 +34,7 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        exitTime = System.currentTimeMillis();
         initUI();
         fragmentManager = getSupportFragmentManager();
         setDefaultFirstFragment(Constant.FRAGMENT_FLAG_HOME);
@@ -198,5 +201,18 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
         /*然后在碎片中调用重写的onActivityResult方法*/
         f.onActivityResult(requestCode, resultCode, data);
     }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

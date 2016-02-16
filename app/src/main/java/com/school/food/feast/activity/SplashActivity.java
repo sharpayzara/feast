@@ -10,7 +10,9 @@ import android.os.Message;
 
 import com.school.food.feast.util.Constant;
 
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 
 public class SplashActivity extends Activity {
 
@@ -19,11 +21,14 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
         Bmob.initialize(this, Constant.APPID);
+        BmobInstallation.getCurrentInstallation(this).save();
+        // 启动推送服务
+        BmobPush.startWork(this, Constant.APPID);
 		boolean mFirst = isFirstEnter(SplashActivity.this,SplashActivity.this.getClass().getName());
         if(mFirst)
         	mHandler.sendEmptyMessage(SWITCH_GUIDACTIVITY);
-            else
-                mHandler.sendEmptyMessage(SWITCH_MAINACTIVITY);
+        else
+            mHandler.sendEmptyMessage(SWITCH_MAINACTIVITY);
         }
 
 	//****************************************************************
