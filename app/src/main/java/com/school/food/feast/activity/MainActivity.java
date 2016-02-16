@@ -22,6 +22,8 @@ import com.school.food.feast.layout.BottomControlPanel;
 import com.school.food.feast.layout.HeadControlPanel;
 import com.school.food.feast.util.Constant;
 
+import cn.bmob.v3.update.BmobUpdateAgent;
+
 public class MainActivity extends FragmentActivity implements BottomControlPanel.BottomPanelCallback {
     BottomControlPanel bottomPanel = null;
     HeadControlPanel headPanel = null;
@@ -38,6 +40,12 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
         initUI();
         fragmentManager = getSupportFragmentManager();
         setDefaultFirstFragment(Constant.FRAGMENT_FLAG_HOME);
+        checkUpdate();
+    }
+
+    private void checkUpdate() {
+
+        BmobUpdateAgent.update(this);
     }
 
     @Override

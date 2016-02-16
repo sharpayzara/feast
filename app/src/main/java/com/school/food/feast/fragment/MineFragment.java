@@ -6,9 +6,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,28 +17,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.school.food.feast.R;
 import com.school.food.feast.activity.CZActivity;
 import com.school.food.feast.activity.FeedBackActivity;
 import com.school.food.feast.activity.LoginActivity;
-import com.school.food.feast.activity.PasswordActivity;
 import com.school.food.feast.activity.QueryBalanceActivity;
-import com.school.food.feast.entity.Discount;
-import com.school.food.feast.entity.Recharge;
-import com.school.food.feast.entity.User;
+
 import com.school.food.feast.services.UserServices;
 import com.school.food.feast.util.Constant;
 
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.listener.BmobDialogButtonListener;
-import cn.bmob.v3.listener.BmobUpdateListener;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 import cn.bmob.v3.update.UpdateResponse;
-import cn.bmob.v3.update.UpdateStatus;
 
 public class MineFragment extends Fragment implements View.OnClickListener{
 	LayoutInflater inflater;
@@ -45,7 +36,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 	LinearLayout unlogin_layout,login_layout;
 	Button login_btn;
 	View root;
-	TextView phoneNum;
+	TextView phoneNum,version_code;
 	UpdateResponse ur;
 	RelativeLayout payPassword,logOut,share_btn,ye_btn,cz_btn,cj_btn,check_update;
 	@Override
@@ -60,6 +51,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 	private void initUI(){
 		check_update = (RelativeLayout) root.findViewById(R.id.check_update);
 		check_update.setOnClickListener(this);
+		version_code = (TextView) root.findViewById(R.id.version_code);
 		ye_btn = (RelativeLayout) root.findViewById(R.id.ye_btn);
 		cz_btn = (RelativeLayout) root.findViewById(R.id.cz_btn);
 		cj_btn = (RelativeLayout) root.findViewById(R.id.cj_btn);
@@ -77,6 +69,14 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 		login_layout = (LinearLayout) root.findViewById(R.id.login_layout);
 		phoneNum = (TextView) root.findViewById(R.id.phoneNum);
 		login_btn.setOnClickListener(this);
+		PackageManager manager = root.getContext().getPackageManager();
+		PackageInfo info = null;
+		try {
+			info = manager.getPackageInfo(getContext().getPackageName(), 0);
+			version_code.setText("当前版本：" + info.versionName);
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -91,35 +91,9 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 		}
 		else if(check_update == v){
 			//	BmobUpdateAgent.initAppVersion(mContext);
-			BmobUpdateAgent.setUpdateListener(new BmobUpdateListener() {
 
-				@Override
-				public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
-					//V3.4.4版本开始，增加版本更新错误提示，可通过此方法获取到错误信息
-				/*	BmobException e = updateInfo.getException();
-					if(e!=null){
-						Toast.makeText(mContext, "检测更新返回："+e.getMessage()+"("+e.getErrorCode()+")", Toast.LENGTH_SHORT).show();
-					}else{
-						ur = updateInfo;
-					}*/
-					//以下适用于V3.4.4之前版本
-					if (updateStatus == UpdateStatus.Yes) {
-						ur = updateInfo;
-					}else if(updateStatus == UpdateStatus.No){
-						Toast.makeText(mContext, "版本无更新", Toast.LENGTH_SHORT).show();
-					}else if(updateStatus==UpdateStatus.EmptyField){//此提示只是提醒开发者关注那些必填项，测试成功后，无需对用户提示
-						Toast.makeText(mContext, "请检查你AppVersion表的必填项，1、target_size（文件大小）是否填写；2、path或者android_url两者必填其中一项。", Toast.LENGTH_SHORT).show();
-					}else if(updateStatus==UpdateStatus.IGNORED){
-						Toast.makeText(mContext, "该版本已被忽略更新", Toast.LENGTH_SHORT).show();
-					}else if(updateStatus==UpdateStatus.ErrorSizeFormat){
-						Toast.makeText(mContext, "请检查target_size填写的格式，请使用file.length()方法获取apk大小。", Toast.LENGTH_SHORT).show();
-					}else if(updateStatus==UpdateStatus.TimeOut){
-						Toast.makeText(mContext, "查询出错或查询超时", Toast.LENGTH_SHORT).show();
-					}
-				}
-			});
 			BmobUpdateAgent.update(mContext);
-			BmobUpdateAgent.setDialogListener(new BmobDialogButtonListener() {
+		/*	BmobUpdateAgent.setDialogListener(new BmobDialogButtonListener() {
 
 				@Override
 				public void onClick(int status) {
@@ -136,7 +110,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 							break;
 					}
 				}
-			});
+			});*/
 		}
 		else if(v == cz_btn){
 			Intent intent = new Intent(mContext,CZActivity.class);
@@ -153,15 +127,15 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 			new AlertDialog.Builder(mContext).setTitle("系统提示")//设置对话框标题
 					.setMessage("确定注销登录？")//设置显示的内容
 					.setPositiveButton("确定",new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						BmobUser.logOut(mContext);
-						initUI();
-					}})
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							BmobUser.logOut(mContext);
+							initUI();
+						}})
 					.setNegativeButton("返回",new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-					}})
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}})
 					.show();
 		}
 		else if(v == share_btn){
@@ -196,7 +170,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 			unlogin_layout.setVisibility(View.GONE);
 			login_layout.setVisibility(View.VISIBLE);
 			phoneNum.setText(UserServices.getPhoneNum(mContext));
-            logOut.setVisibility(View.VISIBLE);
+			logOut.setVisibility(View.VISIBLE);
 		}
 	}
 

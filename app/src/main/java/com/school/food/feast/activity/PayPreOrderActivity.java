@@ -18,6 +18,7 @@ import com.bmob.pay.tool.PayListener;
 import com.school.food.feast.R;
 import com.school.food.feast.activity.base.CommonHeadPanelActivity;
 import com.school.food.feast.entity.BusinessEntity;
+import com.school.food.feast.entity.CZHistory;
 import com.school.food.feast.entity.PreOrder;
 import com.school.food.feast.entity.User;
 import com.school.food.feast.entity.UserOrder;
@@ -40,6 +41,7 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
     private Context mContext;
     private Double factTotalMoney;
     private TextView balance_tv;
+    private String orderId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_preorder_pay);
@@ -51,7 +53,7 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
     }
 
     private void initUI() {
-        setHeadTitle("当面付");
+        setHeadTitle("预定付款");
         showBackBtn();
         balance_tv = (TextView) findViewById(R.id.balance_tv);
         icon_layout = (ImageView) findViewById(R.id.icon_layout);
@@ -62,32 +64,20 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
         ye_radio = (RadioButton) findViewById(R.id.ye_btn);
         ye_radio.setChecked(true);
         pay_btn.setOnClickListener(this);
-        icon_layout.setOnClickListener(this);
+//        icon_layout.setOnClickListener(this);
         balance_tv.setText(UserServices.getAccountBalance(this)+"元");
     }
 
     @Override
     public void onClick(View v) {
-        if(factTotalMoney == 0){
-            toast("无效金额，付款失败");
-            return;
+
+        if(v == pay_btn){
+            if(factTotalMoney == 0){
+                toast("无效金额，付款失败");
+                return;
+            }
+            pay();
         }
-        UserOrder order = new UserOrder();
-        order.setPhoneNum(UserServices.getPhoneNum(mContext));
-        order.setTotalMoney(getIntent().getDoubleExtra("factTotalMoney",0));
-        order.setPreOrders((List<PreOrder>) getIntent().getSerializableExtra("preOrderList"));
-        order.save(mContext, new SaveListener() {
-            @Override
-            public void onSuccess() {
-                pay();
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                toast("下单失败，请稍候再试！");
-            }
-        });
-
 
     }
 
@@ -106,7 +96,7 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
 
             @Override
             public void onSuccess() {
-                createOrder();
+                updateOrder();
                 balance_tv.setText(UserServices.getAccountBalance(mContext) + "元");
             }
 
@@ -120,6 +110,28 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
     private void createOrder() {
 
     }
+
+    public void updateOrder(){
+        UserOrder order = new UserOrder();
+        order.setPhoneNum(UserServices.getPhoneNum(mContext));
+        order.setTotalMoney(getIntent().getDoubleExtra("factTotalMoney",0));
+        order.setPreOrders((List<PreOrder>) getIntent().getSerializableExtra("preOrderList"));
+        order.setOrderId(orderId);
+        order.setUse(false);
+        order.save(mContext, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                toast("下单成功，请在订单中查看或消费");
+                finish();
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                Toast.makeText(mContext,"下单失败，针对财产问题请在意见反馈栏备注说明，工作人员会及时处理",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     public void pay(){
         if(TextUtils.isEmpty(prize_et.getText().toString())){
             Toast.makeText(mContext,"金额不能为空，付款失败",Toast.LENGTH_SHORT).show();
@@ -132,15 +144,17 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
                 }
             }else if(zfb_radio.isChecked()){
 
-                new BmobPay((Activity) mContext).pay(Double.parseDouble(prize_et.getText().toString()),"菜品",new PayListener(){
+                new BmobPay((Activity) mContext).pay(Double.parseDouble(prize_et.getText().toString()),"菜品",UserServices.getPhoneNum(mContext),new PayListener(){
                     @Override
                     public void orderId(String s) {
-                        Toast.makeText(mContext,s,Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(mContext,s,Toast.LENGTH_SHORT).show();
+                        orderId = s;
                     }
 
                     @Override
                     public void succeed() {
                         Toast.makeText(mContext,"支付成功",Toast.LENGTH_SHORT).show();
+                        updateOrder();
                     }
 
                     @Override

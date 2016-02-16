@@ -24,6 +24,8 @@ import com.school.food.feast.util.Constant;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
+
 import cn.bmob.v3.listener.UpdateListener;
 
 public class PayActivity extends CommonHeadPanelActivity implements View.OnClickListener{

@@ -13,6 +13,23 @@ public class UserOrder extends BmobObject implements Serializable{
     private String businessName;
     private String phoneNum;
     private List<PreOrder> preOrders;
+    private String orderId;
+    private Boolean isUse;
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public Boolean getUse() {
+        return isUse;
+    }
+
+    public void setUse(Boolean use) {
+        isUse = use;
+    }
 
     public Double getTotalMoney() {
         return totalMoney;

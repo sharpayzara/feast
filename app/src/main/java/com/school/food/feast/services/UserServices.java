@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.school.food.feast.entity.User;
 
+import java.text.DecimalFormat;
+
 import cn.bmob.v3.BmobUser;
 
 /**
@@ -23,7 +25,8 @@ public class UserServices{
     public static String getAccountBalance(Context mContext){
         User myUser = BmobUser.getCurrentUser(mContext, User.class);
         if(myUser != null){
-            return myUser.getAccountMoney().toString();
+            DecimalFormat df   = new DecimalFormat("######0.00");
+            return df.format(myUser.getAccountMoney()).toString();
         }else{
             return "0";
         }

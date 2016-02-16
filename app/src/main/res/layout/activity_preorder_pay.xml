@@ -13,7 +13,7 @@
         android:background="@drawable/homg_bg_img">
 
 
-        <ImageView
+       <!-- <ImageView
             android:id="@+id/icon_layout"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
@@ -22,11 +22,11 @@
            android:layout_centerHorizontal="true"
             android:src="@drawable/top_pay_icon"
             android:layout_alignParentTop="true"
-            />
+            />-->
        <LinearLayout
            android:id="@+id/ye_layout"
-           android:layout_below="@id/icon_layout"
            android:layout_width="match_parent"
+           android:layout_marginTop="30dp"
            android:layout_height="30dp"
            android:orientation="horizontal">
            <TextView
