@@ -21,6 +21,7 @@ import com.school.food.feast.R;
 import com.school.food.feast.activity.CZActivity;
 import com.school.food.feast.activity.FeedBackActivity;
 import com.school.food.feast.activity.LoginActivity;
+import com.school.food.feast.activity.LotteryActivity;
 import com.school.food.feast.activity.QueryBalanceActivity;
 
 import com.school.food.feast.services.UserServices;
@@ -87,6 +88,9 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 		}
 		else if(v == ye_btn){
 			Intent intent = new Intent(mContext,QueryBalanceActivity.class);
+			mContext.startActivity(intent);
+		}else if(v == cj_btn){
+			Intent intent = new Intent(mContext,LotteryActivity.class);
 			mContext.startActivity(intent);
 		}
 		else if(check_update == v){

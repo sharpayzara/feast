@@ -44,6 +44,10 @@
             android:screenOrientation="portrait"  >
         </activity>
         <activity
+            android:name=".activity.LotteryActivity"
+            android:screenOrientation="portrait"  >
+        </activity>
+        <activity
             android:name=".activity.PayActivity"
             android:screenOrientation="portrait"  >
         </activity>

@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bigwheelgg" />
+
+    <ImageView
+        android:id="@+id/light"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/light" />
+
+    <RelativeLayout
+          android:id="@+id/main_wheel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bigwheel" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/point"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/point" />
+
+</FrameLayout>
