@@ -9,6 +9,15 @@ public class User extends BmobUser {
     private static final long serialVersionUID = 3292304921701053144L;
     private String payPassword;
     private Double accountMoney;
+    private Integer lotteryNum;
+
+    public Integer getLotteryNum() {
+        return lotteryNum;
+    }
+
+    public void setLotteryNum(Integer lotteryNum) {
+        this.lotteryNum = lotteryNum;
+    }
 
     public String getPayPassword() {
         return payPassword;

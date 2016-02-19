@@ -93,6 +93,7 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
                         @Override
                         public void succeed() {
                             Toast.makeText(mContext,"支付成功",Toast.LENGTH_SHORT).show();
+                            UserServices.addLotteryNum(mContext);
                         }
 
                         @Override

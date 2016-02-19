@@ -1,35 +1,52 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/lottery_bg"
     android:layout_gravity="center" >
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/bigwheelgg" />
-
-    <ImageView
         android:id="@+id/light"
+        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/light" />
 
     <RelativeLayout
-          android:id="@+id/main_wheel"
+        android:id="@+id/bigWheel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
+        android:layout_height="wrap_content">
         <ImageView
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/bigwheel" />
+            android:padding="45dp"
+            android:src="@drawable/big_wheel" />
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/point"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="100dp"
         android:src="@drawable/point" />
 
-</FrameLayout>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/lottery_history"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="65dp"
+        android:layout_alignParentBottom="true"
+        android:text="你还有2次抽奖机会"/>
+
+</RelativeLayout>
