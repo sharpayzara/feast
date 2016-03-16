@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="left|center"
-            android:textColor="@color/tab_1"
+            android:textColor="@color/black"
             android:textSize="15sp"/>
 
     </LinearLayout>
@@ -82,7 +82,7 @@
             android:layout_height="40dp"
             android:layout_toRightOf="@id/total_money_tv"
             android:gravity="left|center"
-            android:textColor="@color/tab_1"
+            android:textColor="@color/red"
             android:textSize="15sp"/>
         <TextView
             android:id="@+id/fact_total_money_tv"

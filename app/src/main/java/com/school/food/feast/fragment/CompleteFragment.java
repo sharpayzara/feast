@@ -71,6 +71,7 @@ public class CompleteFragment extends Fragment {
 			@Override
 			public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
 				orderList.clear();
+				Toast.makeText(mContext,"正在加载，请稍后..",Toast.LENGTH_SHORT).show();
 				loadData();
 				materialRefreshLayout.finishRefresh();
 			}
@@ -84,6 +85,7 @@ public class CompleteFragment extends Fragment {
 		BmobQuery<UserOrder> bmobQuery = new BmobQuery<UserOrder>();
 		bmobQuery.addWhereEqualTo("phoneNum",UserServices.getPhoneNum(mContext));
 		bmobQuery.addWhereEqualTo("isUse",true);
+		bmobQuery.order("-createdAt");
 		bmobQuery.findObjects(this.getContext(), new FindListener<UserOrder>() {
 			@Override
 			public void onSuccess(List<UserOrder> list) {

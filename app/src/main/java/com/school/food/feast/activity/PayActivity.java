@@ -121,6 +121,45 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Constant.REQUESTCODE.DMFRESULT){
             entity = (BusinessEntity) data.getSerializableExtra("chooseEntity");
+            setBusinessIcon();
+        }
+    }
+
+    public void setBusinessIcon(){
+        if(entity.getId() == 1){
+            icon_layout.setImageResource(R.mipmap.cxm_icon);
+        }else if(entity.getId() == 2){
+            icon_layout.setImageResource(R.mipmap.dxm_icon);
+        }else if(entity.getId() == 3){
+            icon_layout.setImageResource(R.mipmap.llx_icon);
+        }else if(entity.getId() == 4){
+            icon_layout.setImageResource(R.mipmap.xp_icon);
+        }else if(entity.getId() == 5){
+            icon_layout.setImageResource(R.mipmap.hls_icon);
+        }else if(entity.getId() == 6){
+            icon_layout.setImageResource(R.mipmap.lgj_icon);
+        }else if(entity.getId() == 7){
+            icon_layout.setImageResource(R.mipmap.hzd_icon);
+        }else if(entity.getId() == 8){
+            icon_layout.setImageResource(R.mipmap.yyys_icon);
+        }else if(entity.getId() == 9){
+            icon_layout.setImageResource(R.mipmap.hzw_icon);
+        }else if(entity.getId() == 10){
+            icon_layout.setImageResource(R.mipmap.hhmc_icon);
+        }else if(entity.getId() == 11){
+            icon_layout.setImageResource(R.mipmap.gg_icon);
+        }else if(entity.getId() == 12){
+            icon_layout.setImageResource(R.mipmap.bfg_icon);
+        }else if(entity.getId() == 13){
+            icon_layout.setImageResource(R.mipmap.hhlr_icon);
+        }else if(entity.getId() == 14){
+            icon_layout.setImageResource(R.mipmap.xael_icon);
+        }else if(entity.getId() == 15){
+            icon_layout.setImageResource(R.mipmap.ysys_icon);
+        }else if(entity.getId() == 16){
+            icon_layout.setImageResource(R.mipmap.hgd_icon);
+        }else if(entity.getId() == 17){
+            icon_layout.setImageResource(R.mipmap.ky_icon);
         }
     }
     public void updateAccount(){
