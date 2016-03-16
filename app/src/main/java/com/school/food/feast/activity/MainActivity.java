@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.school.food.feast.R;
+import com.school.food.feast.entity.Order;
+import com.school.food.feast.entity.UserOrder;
 import com.school.food.feast.fragment.HomeFragment;
 import com.school.food.feast.fragment.MineFragment;
 import com.school.food.feast.fragment.OrderFragment;
@@ -22,6 +24,10 @@ import com.school.food.feast.layout.BottomControlPanel;
 import com.school.food.feast.layout.HeadControlPanel;
 import com.school.food.feast.util.Constant;
 
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 
 public class MainActivity extends FragmentActivity implements BottomControlPanel.BottomPanelCallback {
@@ -44,7 +50,6 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
     }
 
     private void checkUpdate() {
-
         BmobUpdateAgent.update(this);
     }
 

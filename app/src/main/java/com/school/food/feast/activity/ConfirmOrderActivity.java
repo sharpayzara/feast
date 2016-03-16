@@ -176,6 +176,8 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
             Intent intent = new Intent(mContext,PayPreOrderActivity.class);
             intent.putExtra("preOrderList", (Serializable) preOrderList);
             intent.putExtra("factTotalMoney",factTotalMoney);
+            intent.putExtra("totalMoney",totalMoney);
+            intent.putExtra("businessName",getIntent().getStringExtra("businessName"));
             startActivity(intent);
         }
     }

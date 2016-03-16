@@ -24,6 +24,17 @@ public class UserServices{
         myUser.update(mContext);
     }
 
+    public static Integer getLotteryNum(Context mContext){
+        User myUser = BmobUser.getCurrentUser(mContext, User.class);
+        if(myUser != null && myUser.getLotteryNum() == null){
+            return  0;
+        }else if(myUser != null){
+            return myUser.getLotteryNum();
+        }else{
+            return 0;
+        }
+    }
+
     public static void subLotteryNum(Context mContext){
         User myUser = BmobUser.getCurrentUser(mContext, User.class);
         if(myUser == null){

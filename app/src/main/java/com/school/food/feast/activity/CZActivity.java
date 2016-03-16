@@ -218,7 +218,7 @@ public class CZActivity extends CommonHeadPanelActivity implements View.OnClickL
     }
     public void updateAccount(){
         final User user = new User();
-        user.setAccountMoney(user.getAccountMoney() + Double.parseDouble(prize_et.getText().toString()) + zsValue);
+        user.setAccountMoney(UserServices.getUser(this).getAccountMoney() + Double.parseDouble(prize_et.getText().toString()) + zsValue);
         String userObjectId = UserServices.getUser(this).getObjectId();
         user.update(this, userObjectId, new UpdateListener() {
 

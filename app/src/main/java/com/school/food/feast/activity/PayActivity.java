@@ -18,14 +18,19 @@ import com.bmob.pay.tool.PayListener;
 import com.school.food.feast.R;
 import com.school.food.feast.activity.base.CommonHeadPanelActivity;
 import com.school.food.feast.entity.BusinessEntity;
+import com.school.food.feast.entity.PreOrder;
 import com.school.food.feast.entity.User;
+import com.school.food.feast.entity.UserOrder;
 import com.school.food.feast.services.UserServices;
 import com.school.food.feast.util.Constant;
 
 import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Random;
 
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class PayActivity extends CommonHeadPanelActivity implements View.OnClickListener{
@@ -94,6 +99,7 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
                         public void succeed() {
                             Toast.makeText(mContext,"支付成功",Toast.LENGTH_SHORT).show();
                             UserServices.addLotteryNum(mContext);
+                            createOrder();
                         }
 
                         @Override
@@ -134,8 +140,39 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
             }
         });
     }
-
+    public String getRandomCode(){
+        String str = "0,1,2,3,4,5,6,7,8,9";
+        String str2[] = str.split(",");//将字符串以,分割
+        int sum = 0;//计数器
+        Random rand = new Random();//创建Random类的对象rand
+        String  randomStr = "";
+        int index = 0;
+        for (int i=0; i<4; ++i)
+        {
+            index = rand.nextInt(str2.length-1);//在0到str2.length-1生成一个伪随机数赋值给index
+            randomStr += str2[index];//将对应索引的数组与randStr的变量值相连接
+        }
+        return randomStr;
+    }
     public void createOrder(){
+        UserOrder order = new UserOrder();
+        order.setPhoneNum(UserServices.getPhoneNum(mContext));
+        order.setTotalMoney(Double.parseDouble(prize_et.getText().toString()));
+        order.setFactTotalMoney(prize_et.getText().toString());
+        order.setBusinessName(entity.getName());
+        order.setOrderId(UserServices.getPhoneNum(this).substring(7,11) + getRandomCode());
+        order.setUse(false);
+        order.save(mContext, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                toast("下单成功，请在订单中查看或消费");
+                finish();
+            }
 
+            @Override
+            public void onFailure(int code, String msg) {
+                Toast.makeText(mContext,"下单失败，针对财产问题请在意见反馈栏备注说明，工作人员会及时处理",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

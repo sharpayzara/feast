@@ -8,7 +8,7 @@ import cn.bmob.v3.BmobUser;
 public class User extends BmobUser {
     private static final long serialVersionUID = 3292304921701053144L;
     private String payPassword;
-    private Double accountMoney;
+    private Double accountMoney = 0d;
     private Integer lotteryNum;
 
     public Integer getLotteryNum() {

@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,11 +16,13 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.school.food.feast.R;
+import com.school.food.feast.services.UserServices;
 
-public class LotteryActivity extends Activity {
+public class LotteryActivity extends Activity implements OnClickListener{
 
 	//设置一个时间常量，此常量有两个作用，1.圆灯视图显示与隐藏中间的切换时间；2.指针转一圈所需要的时间，现设置为500毫秒
 	private static final long ONE_WHEEL_TIME = 500;
@@ -28,10 +31,12 @@ public class LotteryActivity extends Activity {
 	//开始转动时候的角度，初始值为0
 	private int startDegree = 0;
 	int increaseDegree;
-	private boolean isEnd = false;
+	private boolean isEnd = true;
 	private ImageView lightIv;
+	private TextView lottery_num_tv,start_btn;
 	private ImageView pointIv;
 	private RelativeLayout wheelIv;
+	private Integer lotteryNum = 0;
 
 	//指针转圈圈数数据源
 	private int[] laps = { 5, 7, 10, 15 };
@@ -85,6 +90,10 @@ public class LotteryActivity extends Activity {
 			isEnd = true;
 			String name = lotteryStr[Math.abs(increaseDegree)% 360 / 45];
 			Toast.makeText(LotteryActivity.this, name, Toast.LENGTH_LONG).show();
+			lotteryNum = lotteryNum - 1;
+			String source ="你还有<font color='yellow'>" + lotteryNum + "</font>次抽奖机会";
+			lottery_num_tv.setText(Html.fromHtml(source));
+			UserServices.subLotteryNum(LotteryActivity.this);
 		}
 	};
 
@@ -95,44 +104,22 @@ public class LotteryActivity extends Activity {
 		setContentView(R.layout.activity_lottery);
 		setupViews();
 		flashLights();
-		pointIv.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(isEnd == true){
-					return;
-				}
-				int lap = laps[(int) (Math.random() * 4)];
-				int angle = angles[(int) (Math.random() * 6)];
-				//每次转圈角度增量
-				increaseDegree = -(lap * 360 + angle);
-				//初始化旋转动画，后面的四个参数是用来设置以自己的中心点为圆心转圈
-				RotateAnimation rotateAnimation = new RotateAnimation(
-						startDegree, increaseDegree,
-						RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-						RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-				//将最后的角度赋值给startDegree作为下次转圈的初始角度
-				//计算动画播放总时间
-				long time = (lap + angle / 360) * ONE_WHEEL_TIME;
-				//设置动画播放时间
-				rotateAnimation.setDuration(time);
-				//设置动画播放完后，停留在最后一帧画面上
-				rotateAnimation.setFillAfter(true);
-				//设置动画的加速行为，是先加速后减速
-				rotateAnimation.setInterpolator(LotteryActivity.this,
-						android.R.anim.accelerate_decelerate_interpolator);
-				//设置动画的监听器
-				rotateAnimation.setAnimationListener(al);
-				//开始播放动画
-				wheelIv.startAnimation(rotateAnimation);
-				isEnd = false;
-			}
-		});
-
 	}
 	private void setupViews(){
 		lightIv = (ImageView) findViewById(R.id.light);
 		pointIv = (ImageView) findViewById(R.id.point);
 		wheelIv = (RelativeLayout) findViewById(R.id.bigWheel);
+		lottery_num_tv = (TextView) findViewById(R.id.lottery_num_tv);
+		start_btn = (TextView) findViewById(R.id.start_btn);
+		start_btn.setOnClickListener(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		lotteryNum = UserServices.getLotteryNum(this);
+		String source ="你还有<font color='yellow'>" + lotteryNum + "</font>次抽奖机会";
+		lottery_num_tv.setText(Html.fromHtml(source));
 	}
 
 	//控制灯圈动画的方法
@@ -151,5 +138,42 @@ public class LotteryActivity extends Activity {
 
 		// 每隔ONE_WHEEL_TIME毫秒运行tt对象的run方法
 		timer.schedule(tt, 0, ONE_WHEEL_TIME);
+	}
+
+	@Override
+	public void onClick(View v) {
+		if(v == start_btn){
+			if(lotteryNum == 0){
+				Toast.makeText(LotteryActivity.this,"你还没有抽奖的机会，可通过美食预定或当面付消费一次获得！",Toast.LENGTH_LONG).show();
+				return;
+			}
+			if(isEnd == false){
+				return;
+			}
+			int lap = laps[(int) (Math.random() * 4)];
+			int angle = angles[(int) (Math.random() * 6)];
+			//每次转圈角度增量
+			increaseDegree = -(lap * 360 + angle);
+			//初始化旋转动画，后面的四个参数是用来设置以自己的中心点为圆心转圈
+			RotateAnimation rotateAnimation = new RotateAnimation(
+					startDegree, increaseDegree,
+					RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+					RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+			//将最后的角度赋值给startDegree作为下次转圈的初始角度
+			//计算动画播放总时间
+			long time = (lap + angle / 360) * ONE_WHEEL_TIME;
+			//设置动画播放时间
+			rotateAnimation.setDuration(time);
+			//设置动画播放完后，停留在最后一帧画面上
+			rotateAnimation.setFillAfter(true);
+			//设置动画的加速行为，是先加速后减速
+			rotateAnimation.setInterpolator(LotteryActivity.this,
+					android.R.anim.accelerate_decelerate_interpolator);
+			//设置动画的监听器
+			rotateAnimation.setAnimationListener(al);
+			//开始播放动画
+			wheelIv.startAnimation(rotateAnimation);
+			isEnd = false;
+		}
 	}
 }

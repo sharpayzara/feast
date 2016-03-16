@@ -28,6 +28,7 @@ import com.school.food.feast.util.Constant;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Random;
 
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -110,13 +111,29 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
     private void createOrder() {
 
     }
+    public String getRandomCode(){
+        String str = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
+        String str2[] = str.split(",");//将字符串以,分割
+        int sum = 0;//计数器
+        Random rand = new Random();//创建Random类的对象rand
+        String  randomStr = "";
+        int index = 0;
+        for (int i=0; i<4; ++i)
+        {
+            index = rand.nextInt(str2.length-1);//在0到str2.length-1生成一个伪随机数赋值给index
+            randomStr += str2[index];//将对应索引的数组与randStr的变量值相连接
+        }
+        return randomStr;
+    }
 
     public void updateOrder(){
         UserOrder order = new UserOrder();
         order.setPhoneNum(UserServices.getPhoneNum(mContext));
-        order.setTotalMoney(getIntent().getDoubleExtra("factTotalMoney",0));
+        order.setTotalMoney(getIntent().getDoubleExtra("totalMoney",0));
+        order.setFactTotalMoney(getIntent().getDoubleExtra("factTotalMoney",0)+"");
+        order.setBusinessName(getIntent().getStringExtra("businessName"));
+        order.setOrderId(UserServices.getPhoneNum(this).substring(7,11) + getRandomCode());
         order.setPreOrders((List<PreOrder>) getIntent().getSerializableExtra("preOrderList"));
-        order.setOrderId(orderId);
         order.setUse(false);
         order.save(mContext, new SaveListener() {
             @Override
@@ -143,7 +160,7 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
                     updateAccount();
                 }
             }else if(zfb_radio.isChecked()){
-
+                Toast.makeText(PayPreOrderActivity.this, "正在支付，请稍后..", Toast.LENGTH_SHORT).show();
                 new BmobPay((Activity) mContext).pay(Double.parseDouble(prize_et.getText().toString()),"菜品",UserServices.getPhoneNum(mContext),new PayListener(){
                     @Override
                     public void orderId(String s) {
@@ -154,6 +171,7 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
                     @Override
                     public void succeed() {
                         Toast.makeText(mContext,"支付成功",Toast.LENGTH_SHORT).show();
+                        UserServices.addLotteryNum(mContext);
                         updateOrder();
                     }
 

@@ -12,17 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.school.food.feast.R;
 import com.school.food.feast.activity.LoginActivity;
 import com.school.food.feast.adapter.OrderQueryListAdapter;
+import com.school.food.feast.entity.Menu;
 import com.school.food.feast.entity.Order;
+import com.school.food.feast.entity.UserOrder;
 import com.school.food.feast.services.UserServices;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 public class UnCompleteFragment extends Fragment {
 	private Context mContext;
@@ -31,9 +37,8 @@ public class UnCompleteFragment extends Fragment {
 	private View root;
 	private RecyclerView mRecyclerView;
 	private MaterialRefreshLayout materialRefreshLayout;
-	private List<Order> list = new ArrayList<Order>();
+	private List<Order> orderList = new ArrayList<Order>();
 	private OrderQueryListAdapter mAdapter;
-	int i = 110010;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
@@ -65,19 +70,37 @@ public class UnCompleteFragment extends Fragment {
 		materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
 			@Override
 			public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
+				orderList.clear();
 				loadData();
 				materialRefreshLayout.finishRefresh();
 			}
 		});
-		mAdapter =new OrderQueryListAdapter(mContext,list,false);
+		mAdapter =new OrderQueryListAdapter(mContext,orderList,false);
 		mRecyclerView.setAdapter(mAdapter);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 	}
 
 	private void loadData() {
-		Order order = new Order("菜品：蛋炒饭  6元","2","12");
-		//OrderServices.addOrder(mContext,order);
-		list.add(order);
+		BmobQuery<UserOrder> bmobQuery = new BmobQuery<UserOrder>();
+		bmobQuery.addWhereEqualTo("phoneNum",UserServices.getPhoneNum(mContext));
+		bmobQuery.addWhereEqualTo("isUse",false);
+		bmobQuery.findObjects(this.getContext(), new FindListener<UserOrder>() {
+			@Override
+			public void onSuccess(List<UserOrder> list) {
+				 if(list.size() > 0){
+					 orderList.clear();
+					 for(UserOrder order : list){
+						 orderList.add(new Order(order.getObjectId(),order.getBusinessName(),order.getOrderId().toString(),order.getTotalMoney().toString(),order.getCreatedAt()
+						 ,order.getFactTotalMoney()));
+					 }
+				 }
+			}
+
+			@Override
+			public void onError(int i, String s) {
+				Toast.makeText(mContext, "获取数据失败，请稍后再试", Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 }

@@ -14,6 +14,7 @@ public class UserOrder extends BmobObject implements Serializable{
     private String phoneNum;
     private List<PreOrder> preOrders;
     private String orderId;
+    private String factTotalMoney;
     private Boolean isUse;
     public String getOrderId() {
         return orderId;
@@ -29,6 +30,14 @@ public class UserOrder extends BmobObject implements Serializable{
 
     public void setUse(Boolean use) {
         isUse = use;
+    }
+
+    public String getFactTotalMoney() {
+        return factTotalMoney;
+    }
+
+    public void setFactTotalMoney(String factTotalMoney) {
+        this.factTotalMoney = factTotalMoney;
     }
 
     public Double getTotalMoney() {

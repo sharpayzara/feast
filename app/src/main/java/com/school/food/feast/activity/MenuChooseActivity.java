@@ -84,7 +84,6 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
         submit_btn = (Button) findViewById(R.id.submit_btn);
         submit_btn.setOnClickListener(this);
         total_money_tv = (TextView) findViewById(R.id.total_money);
-        chooseBusiness = (BusinessEntity) getIntent().getSerializableExtra("chooseEntity");
         setHeadTitle(chooseBusiness.getName());
         showBackBtn();
         leftList = new ArrayList();
@@ -162,6 +161,7 @@ public class MenuChooseActivity extends CommonHeadPanelActivity implements View.
             }
             Intent intent = new Intent(this,ConfirmOrderActivity.class);
             intent.putExtra("preOrderList", (Serializable) preOrderList);
+            intent.putExtra("businessName", chooseBusiness.getName());
             startActivity(intent);
         }
     }
