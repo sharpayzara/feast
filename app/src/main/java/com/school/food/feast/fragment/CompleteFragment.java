@@ -86,7 +86,7 @@ public class CompleteFragment extends Fragment {
 		bmobQuery.addWhereEqualTo("phoneNum",UserServices.getPhoneNum(mContext));
 		bmobQuery.addWhereEqualTo("isUse",true);
 		bmobQuery.order("-createdAt");
-		bmobQuery.findObjects(this.getContext(), new FindListener<UserOrder>() {
+		bmobQuery.findObjects(mContext, new FindListener<UserOrder>() {
 			@Override
 			public void onSuccess(List<UserOrder> list) {
 				if(list.size() > 0){

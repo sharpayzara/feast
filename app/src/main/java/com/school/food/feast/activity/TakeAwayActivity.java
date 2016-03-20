@@ -132,7 +132,7 @@ public class TakeAwayActivity extends CommonHeadPanelActivity implements View.On
 
     private void testinsertObject(String phoneNum) {
         Intent in2 = new Intent();
-        in2.setAction(Intent.ACTION_CALL);
+        in2.setAction(Intent.ACTION_DIAL);
         String tel = "tel:" + phoneNum;
         in2.setData(Uri.parse(tel));
         startActivity(in2);
