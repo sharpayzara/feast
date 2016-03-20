@@ -73,7 +73,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 		PackageManager manager = root.getContext().getPackageManager();
 		PackageInfo info = null;
 		try {
-			info = manager.getPackageInfo(getContext().getPackageName(), 0);
+			info = manager.getPackageInfo(mContext.getPackageName(), 0);
 			version_code.setText("当前版本：" + info.versionName);
 		} catch (PackageManager.NameNotFoundException e) {
 			e.printStackTrace();

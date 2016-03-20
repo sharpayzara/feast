@@ -15,8 +15,10 @@ import com.school.food.feast.R;
 import com.school.food.feast.entity.Order;
 import com.school.food.feast.entity.User;
 import com.school.food.feast.entity.UserOrder;
+import com.school.food.feast.fragment.ReflushListener;
 import com.school.food.feast.services.UserServices;
 
+import java.sql.Ref;
 import java.util.List;
 
 import cn.bmob.v3.listener.UpdateListener;
@@ -26,11 +28,13 @@ public class OrderQueryListAdapter extends RecyclerView.Adapter<OrderQueryListAd
 	Context mContext;
 	List<Order> list;
 	private boolean isUsed = true;
+	ReflushListener listener;
 
-	public OrderQueryListAdapter(Context context,List<Order> list,boolean isUsed) {
+	public OrderQueryListAdapter(Context context, List<Order> list, boolean isUsed, ReflushListener listener) {
 		mContext = context;
 		this.list = list;
 		this.isUsed = isUsed;
+		this.listener = listener;
 	}
 
 	@Override
@@ -62,9 +66,8 @@ public class OrderQueryListAdapter extends RecyclerView.Adapter<OrderQueryListAd
 									@Override
 									public void onSuccess() {
 										updateAccount(list.get(position).getFactTotalMoney());
-
 										OrderQueryListAdapter.this.notifyDataSetChanged();
-										holder.unreg.setVisibility(View.GONE);
+										listener.reflush();
 									}
 
 									@Override

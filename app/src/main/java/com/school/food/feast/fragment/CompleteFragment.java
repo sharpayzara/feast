@@ -29,7 +29,7 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
-public class CompleteFragment extends Fragment {
+public class CompleteFragment extends Fragment implements ReflushListener{
 	private Context mContext;
 	private TextView tv_text;
 	private Button login_btn;
@@ -76,7 +76,7 @@ public class CompleteFragment extends Fragment {
 				materialRefreshLayout.finishRefresh();
 			}
 		});
-		mAdapter =new OrderQueryListAdapter(mContext,orderList,true);
+		mAdapter =new OrderQueryListAdapter(mContext,orderList,true,this);
 		mRecyclerView.setAdapter(mAdapter);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 	}
@@ -95,6 +95,7 @@ public class CompleteFragment extends Fragment {
 						orderList.add(new Order(order.getObjectId(),order.getBusinessName(),order.getOrderId().toString(),order.getTotalMoney().toString(),order.getCreatedAt()
 								,order.getFactTotalMoney()));
 					}
+					mAdapter.notifyDataSetChanged();
 				}
 			}
 
@@ -105,4 +106,8 @@ public class CompleteFragment extends Fragment {
 		});
 	}
 
+	@Override
+	public void reflush() {
+
+	}
 }

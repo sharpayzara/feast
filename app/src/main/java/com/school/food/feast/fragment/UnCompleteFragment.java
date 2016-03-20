@@ -30,7 +30,7 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
-public class UnCompleteFragment extends Fragment {
+public class UnCompleteFragment extends Fragment implements ReflushListener{
 	private Context mContext;
 	private TextView tv_text;
 	private Button login_btn;
@@ -76,7 +76,7 @@ public class UnCompleteFragment extends Fragment {
 				materialRefreshLayout.finishRefresh();
 			}
 		});
-		mAdapter =new OrderQueryListAdapter(mContext,orderList,false);
+		mAdapter =new OrderQueryListAdapter(mContext,orderList,false,this);
 		mRecyclerView.setAdapter(mAdapter);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 	}
@@ -95,6 +95,7 @@ public class UnCompleteFragment extends Fragment {
 						 orderList.add(new Order(order.getObjectId(),order.getBusinessName(),order.getOrderId().toString(),order.getTotalMoney().toString(),order.getCreatedAt()
 						 ,order.getFactTotalMoney()));
 					 }
+					 mAdapter.notifyDataSetChanged();
 				 }
 			}
 
@@ -105,4 +106,11 @@ public class UnCompleteFragment extends Fragment {
 		});
 	}
 
+	@Override
+	public void reflush() {
+		Toast.makeText(mContext,"退订成功，金额已退订到你的账户余额！",Toast.LENGTH_SHORT).show();
+		//mAdapter.notifyDataSetChanged();
+		orderList.clear();
+		loadData();
+	}
 }
