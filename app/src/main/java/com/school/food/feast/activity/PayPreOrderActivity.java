@@ -21,8 +21,10 @@ import com.school.food.feast.entity.BusinessEntity;
 import com.school.food.feast.entity.CZHistory;
 import com.school.food.feast.entity.PreOrder;
 import com.school.food.feast.entity.User;
+import com.school.food.feast.entity.UserAccount;
 import com.school.food.feast.entity.UserOrder;
 import com.school.food.feast.services.UserServices;
+import com.school.food.feast.util.CommonUtils;
 import com.school.food.feast.util.Constant;
 
 import org.w3c.dom.Text;
@@ -30,6 +32,9 @@ import org.w3c.dom.Text;
 import java.util.List;
 import java.util.Random;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -43,6 +48,8 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
     private Double factTotalMoney;
     private TextView balance_tv;
     private String orderId;
+    private Double userBalance = 0d;
+    private boolean isCanPay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_preorder_pay);
@@ -53,6 +60,11 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
         initUI();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isCanPay = true;
+    }
     private void initUI() {
         setHeadTitle("预定付款");
         showBackBtn();
@@ -66,7 +78,26 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
         ye_radio.setChecked(true);
         pay_btn.setOnClickListener(this);
 //        icon_layout.setOnClickListener(this);
-        balance_tv.setText(UserServices.getAccountBalance(this)+"元");
+        getAccountBalance();
+    }
+
+    public void getAccountBalance(){
+        BmobQuery<UserAccount> bmobQuery = new BmobQuery<UserAccount>();
+        bmobQuery.addWhereEqualTo("userPhone", BmobUser.getCurrentUser(mContext).getMobilePhoneNumber());
+        bmobQuery.findObjects(mContext, new FindListener<UserAccount>() {
+            @Override
+            public void onSuccess(List<UserAccount> list) {
+                if(list.size() > 0){
+                    balance_tv.setText(CommonUtils.getDoubleData(list.get(0).getAccountMoney())+"元");
+                    userBalance = list.get(0).getAccountMoney();
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Toast.makeText(mContext, "获取数据失败，请稍后再试", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -77,6 +108,10 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
                 toast("无效金额，付款失败");
                 return;
             }
+            if(!isCanPay){
+                return;
+            }
+            isCanPay = false;
             pay();
         }
 
@@ -89,7 +124,7 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
         }
     }
 
-    public void updateAccount(){
+   /* public void updateAccount(){
         final User user = new User();
         user.setAccountMoney(Double.parseDouble(UserServices.getAccountBalance(this)) - Double.parseDouble(prize_et.getText().toString()));
         String userObjectId = UserServices.getUser(this).getObjectId();
@@ -105,12 +140,41 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
             public void onFailure(int code, String msg) {
             }
         });
+    }*/
+   public void updateAccount(){
+       BmobQuery<UserAccount> bmobQuery = new BmobQuery<UserAccount>();
+       bmobQuery.addWhereEqualTo("userPhone",BmobUser.getCurrentUser(mContext).getMobilePhoneNumber());
+       bmobQuery.findObjects(mContext, new FindListener<UserAccount>() {
+           @Override
+           public void onSuccess(List<UserAccount> list) {
+               if(list.size() > 0){
+                   updateUserAccount(list.get(0));
+               }
+           }
+
+           @Override
+           public void onError(int i, String s) {
+               Toast.makeText(mContext, "获取数据失败，请稍后再试", Toast.LENGTH_SHORT).show();
+           }
+       });
+   }
+    public void updateUserAccount(UserAccount userAccount){
+        final UserAccount account = new UserAccount();
+        account.setAccountMoney(userAccount.getAccountMoney() - Double.parseDouble(prize_et.getText().toString()));
+        account.update(this, userAccount.getObjectId(), new UpdateListener() {
+            @Override
+            public void onSuccess() {
+                getAccountBalance();
+                updateOrder();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+
+            }
+        });
     }
 
-
-    private void createOrder() {
-
-    }
     public String getRandomCode(){
         String str = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
         String str2[] = str.split(",");//将字符串以,分割
@@ -135,6 +199,7 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
         order.setOrderId(UserServices.getPhoneNum(this).substring(7,11) + getRandomCode());
         order.setPreOrders((List<PreOrder>) getIntent().getSerializableExtra("preOrderList"));
         order.setUse(false);
+        order.setUnReg(false);
         order.save(mContext, new SaveListener() {
             @Override
             public void onSuccess() {
@@ -154,7 +219,7 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
             Toast.makeText(mContext,"金额不能为空，付款失败",Toast.LENGTH_SHORT).show();
         }else{
             if(ye_radio.isChecked()){
-                if( Double.parseDouble(UserServices.getAccountBalance(this)) < Double.parseDouble(prize_et.getText().toString())){
+                if(userBalance < Double.parseDouble(prize_et.getText().toString())){
                     Toast.makeText(mContext,"账户余额不足",Toast.LENGTH_SHORT).show();
                 }else{
                     updateAccount();

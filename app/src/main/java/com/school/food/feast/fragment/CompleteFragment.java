@@ -82,9 +82,15 @@ public class CompleteFragment extends Fragment implements ReflushListener{
 	}
 
 	private void loadData() {
+		BmobQuery<UserOrder> eq1 = new BmobQuery<UserOrder>();
+		eq1.addWhereEqualTo("isUnReg",true);
+		BmobQuery<UserOrder> eq2 = new BmobQuery<UserOrder>();
+		eq2.addWhereEqualTo("isUse",true);
+		List<BmobQuery<UserOrder>> queries = new ArrayList<BmobQuery<UserOrder>>();
+		queries.add(eq1);
+		queries.add(eq2);
 		BmobQuery<UserOrder> bmobQuery = new BmobQuery<UserOrder>();
-		bmobQuery.addWhereEqualTo("phoneNum",UserServices.getPhoneNum(mContext));
-		bmobQuery.addWhereEqualTo("isUse",true);
+		bmobQuery.or(queries);
 		bmobQuery.order("-createdAt");
 		bmobQuery.findObjects(mContext, new FindListener<UserOrder>() {
 			@Override

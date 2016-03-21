@@ -20,8 +20,10 @@ import com.school.food.feast.activity.base.CommonHeadPanelActivity;
 import com.school.food.feast.entity.BusinessEntity;
 import com.school.food.feast.entity.PreOrder;
 import com.school.food.feast.entity.User;
+import com.school.food.feast.entity.UserAccount;
 import com.school.food.feast.entity.UserOrder;
 import com.school.food.feast.services.UserServices;
+import com.school.food.feast.util.CommonUtils;
 import com.school.food.feast.util.Constant;
 
 import org.w3c.dom.Text;
@@ -30,6 +32,9 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -41,6 +46,8 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
     private ImageView icon_layout;
     private Context mContext;
     private TextView balance_tv;
+    private Double userBalance = 0d;
+    private boolean isCanPay = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_pay);
@@ -48,6 +55,12 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
         BmobPay.init(mContext, Constant.APPID);
         mContext = this;
         initUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isCanPay = true;
     }
 
     private void initUI() {
@@ -62,9 +75,28 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
         ye_radio.setChecked(true);
         pay_btn.setOnClickListener(this);
         icon_layout.setOnClickListener(this);
-        balance_tv.setText(UserServices.getAccountBalance(this) + "元");
+        //balance_tv.setText(UserServices.getAccountBalance(this) + "元");
+        getAccountBalance();
     }
 
+    public void getAccountBalance(){
+        BmobQuery<UserAccount> bmobQuery = new BmobQuery<UserAccount>();
+        bmobQuery.addWhereEqualTo("userPhone", BmobUser.getCurrentUser(mContext).getMobilePhoneNumber());
+        bmobQuery.findObjects(mContext, new FindListener<UserAccount>() {
+            @Override
+            public void onSuccess(List<UserAccount> list) {
+                if(list.size() > 0){
+                    balance_tv.setText(CommonUtils.getDoubleData(list.get(0).getAccountMoney())+"元");
+                    userBalance = list.get(0).getAccountMoney();
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Toast.makeText(mContext, "获取数据失败，请稍后再试", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     @Override
     public void onClick(View v) {
         if(v == icon_layout){
@@ -72,6 +104,10 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
             intent.putExtra("dmf","当面付");
             startActivityForResult(intent,1);
         }else if(v == pay_btn){
+            if(!isCanPay){
+                return;
+            }
+            isCanPay = false;
             if(entity == null|| TextUtils.isEmpty(entity.getName())){
                 toast("请选择商家");
                 return;
@@ -82,7 +118,7 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
                 Toast.makeText(mContext,"金额不能为空，付款失败",Toast.LENGTH_SHORT).show();
             }else{
                 if(ye_radio.isChecked()){
-                    if( Double.parseDouble(UserServices.getAccountBalance(this)) < Double.parseDouble(prize_et.getText().toString())){
+                    if( userBalance < Double.parseDouble(prize_et.getText().toString())){
                         Toast.makeText(mContext,"账户余额不足",Toast.LENGTH_SHORT).show();
                     }else{
                         updateAccount();
@@ -162,7 +198,7 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
             icon_layout.setImageResource(R.mipmap.ky_icon);
         }
     }
-    public void updateAccount(){
+    /*public void updateAccount(){
         final User user = new User();
         user.setAccountMoney(Double.parseDouble(UserServices.getAccountBalance(this)) - Double.parseDouble(prize_et.getText().toString()));
         String userObjectId = UserServices.getUser(this).getObjectId();
@@ -171,14 +207,53 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
             @Override
             public void onSuccess() {
                 createOrder();
-                balance_tv.setText(UserServices.getAccountBalance(mContext) + "元");
+               // balance_tv.setText(UserServices.getAccountBalance(mContext) + "元");
+                getAccountBalance();
             }
 
             @Override
             public void onFailure(int code, String msg) {
             }
         });
+    }*/
+
+    public void updateAccount(){
+        BmobQuery<UserAccount> bmobQuery = new BmobQuery<UserAccount>();
+        bmobQuery.addWhereEqualTo("userPhone",BmobUser.getCurrentUser(mContext).getMobilePhoneNumber());
+        bmobQuery.findObjects(mContext, new FindListener<UserAccount>() {
+            @Override
+            public void onSuccess(List<UserAccount> list) {
+                if(list.size() > 0){
+                    updateUserAccount(list.get(0));
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Toast.makeText(mContext, "获取数据失败，请稍后再试", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    public void updateUserAccount(UserAccount userAccount){
+        final UserAccount account = new UserAccount();
+        account.setAccountMoney(userAccount.getAccountMoney() - Double.parseDouble(prize_et.getText().toString()));
+        account.update(this, userAccount.getObjectId(), new UpdateListener() {
+            @Override
+            public void onSuccess() {
+               getAccountBalance();
+                createOrder();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+
+            }
+        });
+    }
+
+
+
     public String getRandomCode(){
         String str = "0,1,2,3,4,5,6,7,8,9";
         String str2[] = str.split(",");//将字符串以,分割
@@ -198,6 +273,7 @@ public class PayActivity extends CommonHeadPanelActivity implements View.OnClick
         order.setPhoneNum(UserServices.getPhoneNum(mContext));
         order.setTotalMoney(Double.parseDouble(prize_et.getText().toString()));
         order.setFactTotalMoney(prize_et.getText().toString());
+        order.setUnReg(false);
         order.setBusinessName(entity.getName());
         order.setOrderId(UserServices.getPhoneNum(this).substring(7,11) + getRandomCode());
         order.setUse(false);

@@ -22,6 +22,7 @@ import com.school.food.feast.activity.CZActivity;
 import com.school.food.feast.activity.FeedBackActivity;
 import com.school.food.feast.activity.LoginActivity;
 import com.school.food.feast.activity.LotteryActivity;
+import com.school.food.feast.activity.MainActivity;
 import com.school.food.feast.activity.QueryBalanceActivity;
 
 import com.school.food.feast.services.UserServices;
@@ -134,7 +135,8 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							BmobUser.logOut(mContext);
-							initUI();
+							int pid = android.os.Process.myPid(); //获取当前应用程序的PID
+							android.os.Process.killProcess(pid);
 						}})
 					.setNegativeButton("返回",new DialogInterface.OnClickListener() {
 						@Override

@@ -27,6 +27,8 @@ import com.school.food.feast.entity.CZHistory;
 import com.school.food.feast.entity.Discount;
 import com.school.food.feast.entity.Recharge;
 import com.school.food.feast.entity.User;
+import com.school.food.feast.entity.UserAccount;
+import com.school.food.feast.entity.UserOrder;
 import com.school.food.feast.services.UserServices;
 import com.school.food.feast.util.Constant;
 
@@ -67,8 +69,27 @@ public class CZActivity extends CommonHeadPanelActivity implements View.OnClickL
         initData();
     }
 
+    public void getAccountBalance(){
+        BmobQuery<UserAccount> bmobQuery = new BmobQuery<UserAccount>();
+        bmobQuery.addWhereEqualTo("userPhone",BmobUser.getCurrentUser(mContext).getMobilePhoneNumber());
+        bmobQuery.findObjects(mContext, new FindListener<UserAccount>() {
+            @Override
+            public void onSuccess(List<UserAccount> list) {
+                if(list.size() > 0){
+                   balance_tv.setText(list.get(0).getAccountMoney()+"元");
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Toast.makeText(mContext, "获取数据失败，请稍后再试", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void initData() {
-        balance_tv.setText(UserServices.getAccountBalance(this)+"元");
+       //balance_tv.setText(UserServices.getAccountBalance(this)+"元");
+        getAccountBalance();
         rechargeList = new ArrayList<>();
         BmobQuery<Recharge> bmobQuery = new BmobQuery<Recharge>();
         bmobQuery.order("chargeValue");
@@ -217,18 +238,35 @@ public class CZActivity extends CommonHeadPanelActivity implements View.OnClickL
         });
     }
     public void updateAccount(){
-        final User user = new User();
-        user.setAccountMoney(UserServices.getUser(this).getAccountMoney() + Double.parseDouble(prize_et.getText().toString()) + zsValue);
-        String userObjectId = UserServices.getUser(this).getObjectId();
-        user.update(this, userObjectId, new UpdateListener() {
+        BmobQuery<UserAccount> bmobQuery = new BmobQuery<UserAccount>();
+        bmobQuery.addWhereEqualTo("userPhone",BmobUser.getCurrentUser(mContext).getMobilePhoneNumber());
+        bmobQuery.findObjects(mContext, new FindListener<UserAccount>() {
+            @Override
+            public void onSuccess(List<UserAccount> list) {
+                if(list.size() > 0){
+                    updateUserAccount(list.get(0));
+                }
+            }
 
+            @Override
+            public void onError(int i, String s) {
+                Toast.makeText(mContext, "获取数据失败，请稍后再试", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void updateUserAccount(UserAccount userAccount){
+        final UserAccount account = new UserAccount();
+        account.setAccountMoney(userAccount.getAccountMoney() + Double.parseDouble(prize_et.getText().toString()) + zsValue );
+        account.update(this, userAccount.getObjectId(), new UpdateListener() {
             @Override
             public void onSuccess() {
                 updateHistory();
             }
 
             @Override
-            public void onFailure(int code, String msg) {
+            public void onFailure(int i, String s) {
+
             }
         });
     }
@@ -262,7 +300,8 @@ public class CZActivity extends CommonHeadPanelActivity implements View.OnClickL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constant.REQUESTCODE.LOGINACTIVITY) {
-            balance_tv.setText(UserServices.getAccountBalance(this)+"元");
+           // balance_tv.setText(UserServices.getAccountBalance(this)+"元");
+            getAccountBalance();
         }
     }
 }

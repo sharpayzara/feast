@@ -12,6 +12,7 @@ public class UserOrder extends BmobObject implements Serializable{
     private Double totalMoney;
     private String businessName;
     private String phoneNum;
+    private Boolean isUnReg;
     private List<PreOrder> preOrders;
     private String orderId;
     private String factTotalMoney;
@@ -26,6 +27,14 @@ public class UserOrder extends BmobObject implements Serializable{
 
     public Boolean getUse() {
         return isUse;
+    }
+
+    public Boolean getUnReg() {
+        return isUnReg;
+    }
+
+    public void setUnReg(Boolean unReg) {
+        isUnReg = unReg;
     }
 
     public void setUse(Boolean use) {

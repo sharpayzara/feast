@@ -10,12 +10,19 @@ import android.widget.EditText;
 import com.school.food.feast.R;
 import com.school.food.feast.activity.base.CommonHeadPanelActivity;
 import com.school.food.feast.entity.User;
+import com.school.food.feast.entity.UserAccount;
+import com.school.food.feast.services.UserServices;
 import com.school.food.feast.util.Constant;
 import com.school.food.feast.util.TimeCountUtil;
 
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.RequestSMSCodeListener;
 
@@ -100,11 +107,35 @@ public class LoginActivity extends CommonHeadPanelActivity implements View.OnCli
                 // TODO Auto-generated method stub
                 if (user != null) {
                     toast("登录成功");
+                    checkAccountIsExist();
                     setResult(Constant.REQUESTCODE.LOGINACTIVITY);
                     finish();
                 } else {
                     toast("验证失败");
                 }
+            }
+        });
+    }
+    private void saveUserAccount(){
+        UserAccount account = new UserAccount();
+        account.setAccountMoney(0d);
+        account.setUserPhone(UserServices.getPhoneNum(this));
+        account.save(this);
+    }
+    private void checkAccountIsExist(){
+        BmobQuery<UserAccount> query = new BmobQuery<UserAccount>();
+        query.addWhereEqualTo("userPhone",UserServices.getPhoneNum(this));
+        query.findObjects(this, new FindListener<UserAccount>() {
+            @Override
+            public void onSuccess(List<UserAccount> list) {
+                if(list.size() == 0 ){
+                    saveUserAccount();
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
             }
         });
     }

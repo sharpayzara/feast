@@ -14,13 +14,19 @@ import android.widget.Toast;
 import com.school.food.feast.R;
 import com.school.food.feast.entity.Order;
 import com.school.food.feast.entity.User;
+import com.school.food.feast.entity.UserAccount;
 import com.school.food.feast.entity.UserOrder;
 import com.school.food.feast.fragment.ReflushListener;
 import com.school.food.feast.services.UserServices;
 
 import java.sql.Ref;
+import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 
@@ -29,6 +35,7 @@ public class OrderQueryListAdapter extends RecyclerView.Adapter<OrderQueryListAd
 	List<Order> list;
 	private boolean isUsed = true;
 	ReflushListener listener;
+	boolean isCanTD = true;
 
 	public OrderQueryListAdapter(Context context, List<Order> list, boolean isUsed, ReflushListener listener) {
 		mContext = context;
@@ -42,6 +49,54 @@ public class OrderQueryListAdapter extends RecyclerView.Adapter<OrderQueryListAd
 		OrderHolder holder = new OrderHolder(LayoutInflater.from(mContext).inflate(R.layout.order_query_item, parent,
 				false));
 		return holder;
+	}
+
+	private void checkIsTD(final int position){
+		BmobQuery<UserOrder> b1 = new BmobQuery<UserOrder>();
+		b1.addWhereEqualTo("objectId",list.get(position).getObjectId());
+		BmobQuery<UserOrder> b2 = new BmobQuery<UserOrder>();
+		b2.addWhereEqualTo("isUnReg", false);
+		BmobQuery<UserOrder> b3 = new BmobQuery<UserOrder>();
+		b3.addWhereEqualTo("isUse", false);
+		List<BmobQuery<UserOrder>> queries = new ArrayList<BmobQuery<UserOrder>>();
+		queries.add(b1);
+	 	queries.add(b2);
+		queries.add(b3);
+		BmobQuery<UserOrder> query = new BmobQuery<UserOrder>();
+		query.and(queries);
+		query.findObjects(mContext, new FindListener<UserOrder>() {
+			@Override
+			public void onSuccess(final List<UserOrder> lists) {
+				if(lists.size() == 0){
+					Toast.makeText(mContext,"订单异常，请稍后再试",Toast.LENGTH_SHORT).show();
+					isCanTD = true;
+					return ;
+				}
+
+				UserOrder userOrder = new UserOrder();
+				userOrder.setUnReg(true);
+				userOrder.update(mContext, lists.get(0).getObjectId(), new UpdateListener() {
+					@Override
+					public void onSuccess() {
+						updateAccount(lists.get(0).getFactTotalMoney());
+					}
+
+					@Override
+					public void onFailure(int i, String s) {
+						isCanTD = true;
+						Toast.makeText(mContext, "退款失败，请稍后再试", Toast.LENGTH_SHORT).show();
+					}
+				});
+			}
+
+			@Override
+			public void onError(int i, String s) {
+				Toast.makeText(mContext,"订单异常，请稍后再试",Toast.LENGTH_SHORT).show();
+				isCanTD = true;
+				return ;
+			}
+		});
+
 	}
 
 	@Override
@@ -60,22 +115,11 @@ public class OrderQueryListAdapter extends RecyclerView.Adapter<OrderQueryListAd
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								UserOrder userOrder = new UserOrder();
-								userOrder.setUse(true);
-								userOrder.update(mContext, list.get(position).getObjectId(), new UpdateListener() {
-									@Override
-									public void onSuccess() {
-										updateAccount(list.get(position).getFactTotalMoney());
-										OrderQueryListAdapter.this.notifyDataSetChanged();
-										listener.reflush();
-									}
-
-									@Override
-									public void onFailure(int i, String s) {
-										Toast.makeText(mContext, "退款失败，请稍后再试", Toast.LENGTH_SHORT).show();
-									}
-								});
-
+								if(!isCanTD){
+									return;
+								}
+								isCanTD = false;
+								checkIsTD(position);
 							}
 						})
 						.setNegativeButton("返回", new DialogInterface.OnClickListener() {
@@ -89,7 +133,7 @@ public class OrderQueryListAdapter extends RecyclerView.Adapter<OrderQueryListAd
 		});
 	}
 
-	public void updateAccount(String factTotalMoney){
+	/*public void updateAccount(String factTotalMoney){
 		final User user = new User();
 		user.setAccountMoney(UserServices.getUser(mContext).getAccountMoney() + Double.parseDouble(factTotalMoney));
 		String userObjectId = UserServices.getUser(mContext).getObjectId();
@@ -97,11 +141,47 @@ public class OrderQueryListAdapter extends RecyclerView.Adapter<OrderQueryListAd
 
 			@Override
 			public void onSuccess() {
-				Toast.makeText(mContext, "退款成功", Toast.LENGTH_SHORT).show();
+				isCanTD = true;
+				listener.reflush();
 			}
 
 			@Override
 			public void onFailure(int code, String msg) {
+				isCanTD = true;
+			}
+		});
+	}*/
+
+	public void updateAccount(final String factTotalMoney){
+		BmobQuery<UserAccount> bmobQuery = new BmobQuery<UserAccount>();
+		bmobQuery.addWhereEqualTo("userPhone", BmobUser.getCurrentUser(mContext).getMobilePhoneNumber());
+		bmobQuery.findObjects(mContext, new FindListener<UserAccount>() {
+			@Override
+			public void onSuccess(List<UserAccount> list) {
+				if(list.size() > 0){
+					updateUserAccount(list.get(0),factTotalMoney);
+				}
+			}
+
+			@Override
+			public void onError(int i, String s) {
+				Toast.makeText(mContext, "获取数据失败，请稍后再试", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+	public void updateUserAccount(UserAccount userAccount,String factTotalMoney){
+		final UserAccount account = new UserAccount();
+		account.setAccountMoney(userAccount.getAccountMoney() + Double.parseDouble(factTotalMoney));
+		account.update(mContext, userAccount.getObjectId(), new UpdateListener() {
+			@Override
+			public void onSuccess() {
+				isCanTD = true;
+				listener.reflush();
+			}
+
+			@Override
+			public void onFailure(int i, String s) {
+				isCanTD = true;
 			}
 		});
 	}
