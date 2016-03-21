@@ -17,6 +17,16 @@ public class UserOrder extends BmobObject implements Serializable{
     private String orderId;
     private String factTotalMoney;
     private Boolean isUse;
+    private Long  discountData;
+
+    public Long getDiscountData() {
+        return discountData;
+    }
+
+    public void setDiscountData(Long discountData) {
+        this.discountData = discountData;
+    }
+
     public String getOrderId() {
         return orderId;
     }

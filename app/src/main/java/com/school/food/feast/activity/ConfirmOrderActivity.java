@@ -44,6 +44,7 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
     List<Discount> discountList;
     Context mContext;
     Button pay_btn;
+    Long discountData;
     private SimpleDateFormat mFormatter = new SimpleDateFormat("MM月dd日 HH点mm分");
     private SlideDateTimeListener listener = new SlideDateTimeListener() {
 
@@ -53,6 +54,7 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
                 Toast.makeText(mContext,"时间不合法，请从新输入",Toast.LENGTH_SHORT).show();
                 return;
             }
+            discountData = date.getTime();
             DecimalFormat df = new DecimalFormat("######0.0");
             order_time_tv.setText(mFormatter.format(date));
             Long discountTime = date.getTime() - sysCurrentTime;
@@ -177,6 +179,7 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
             intent.putExtra("preOrderList", (Serializable) preOrderList);
             intent.putExtra("factTotalMoney",factTotalMoney);
             intent.putExtra("totalMoney",totalMoney);
+            intent.putExtra("discountData",discountData);
             intent.putExtra("businessName",getIntent().getStringExtra("businessName"));
             startActivity(intent);
         }
@@ -200,4 +203,5 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
             }
         });
     }
+
 }
