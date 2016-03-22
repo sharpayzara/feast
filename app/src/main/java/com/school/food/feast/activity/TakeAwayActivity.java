@@ -149,13 +149,6 @@ public class TakeAwayActivity extends CommonHeadPanelActivity implements View.On
     private void queryPhones(){
         final BmobQuery<TakeAwayPhone> bmobQuery = new BmobQuery<TakeAwayPhone>();
         bmobQuery.order("seqId");
-        //先判断是否有缓存
-        boolean isCache = bmobQuery.hasCachedResult(TakeAwayActivity.this,TakeAwayPhone.class);
-        if(isCache){
-            bmobQuery.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);	// 先从缓存取数据，如果没有的话，再从网络取。
-        }else{
-            bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);	// 如果没有缓存的话，则先从网络中取
-        }
         bmobQuery.findObjects(this, new FindListener<TakeAwayPhone>() {
 
             @Override

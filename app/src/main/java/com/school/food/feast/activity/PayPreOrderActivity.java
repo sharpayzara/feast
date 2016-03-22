@@ -204,7 +204,7 @@ public class PayPreOrderActivity extends CommonHeadPanelActivity implements View
         order.save(mContext, new SaveListener() {
             @Override
             public void onSuccess() {
-                toast("下单成功，向食堂业务员提供订单编号获取餐票！");
+                toastForLong("下单成功，向食堂业务员提供订单编号获取餐票,就餐后别忘记抽奖哦！");
                 finish();
             }
 

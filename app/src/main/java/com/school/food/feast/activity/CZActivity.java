@@ -57,9 +57,9 @@ public class CZActivity extends CommonHeadPanelActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_cz);
         super.onCreate(savedInstanceState);
+        mContext = this;
         initUI();
         initData();
-        mContext = this;
         judgeIsLogin();
     }
 
@@ -71,7 +71,7 @@ public class CZActivity extends CommonHeadPanelActivity implements View.OnClickL
 
     public void getAccountBalance(){
         BmobQuery<UserAccount> bmobQuery = new BmobQuery<UserAccount>();
-        bmobQuery.addWhereEqualTo("userPhone",BmobUser.getCurrentUser(mContext).getMobilePhoneNumber());
+        bmobQuery.addWhereEqualTo("userPhone",BmobUser.getCurrentUser(this).getMobilePhoneNumber());
         bmobQuery.findObjects(mContext, new FindListener<UserAccount>() {
             @Override
             public void onSuccess(List<UserAccount> list) {

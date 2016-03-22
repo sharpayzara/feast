@@ -101,8 +101,8 @@ public class CompleteFragment extends Fragment implements ReflushListener{
 						orderList.add(new Order(order.getObjectId(),order.getBusinessName(),order.getOrderId().toString(),order.getTotalMoney().toString(),order.getCreatedAt()
 								,order.getFactTotalMoney()));
 					}
-					mAdapter.notifyDataSetChanged();
 				}
+				mAdapter.notifyDataSetChanged();
 			}
 
 			@Override

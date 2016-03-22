@@ -47,6 +47,7 @@
         android:src="@drawable/lottery_history"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         />
 
     <TextView

@@ -105,8 +105,11 @@ public class UnCompleteFragment extends Fragment implements ReflushListener{
 						 orderList.add(new Order(order.getObjectId(),order.getBusinessName(),order.getOrderId().toString(),order.getTotalMoney().toString(),order.getCreatedAt()
 						 ,order.getFactTotalMoney()));
 					 }
-					 mAdapter.notifyDataSetChanged();
+				 }else{
+					 Toast.makeText(mContext, "暂无数据", Toast.LENGTH_SHORT).show();
 				 }
+				mAdapter.notifyDataSetChanged();
+
 			}
 
 			@Override

@@ -25,6 +25,10 @@ public class BaseActivity extends Activity {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         Log.d(TAG, msg);
     }
+    public void toastForLong(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        Log.d(TAG, msg);
+    }
 
     Toast mToast;
 
