@@ -15,3 +15,12 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-ignorewarnings
+
+# 这里根据具体的SDK版本修改
+
+-keepattributes Signature
+-keep class cn.bmob.v3.** {*;}
+
+# 保证继承自BmobObject、BmobUser类的JavaBean不被混淆
+-keep class com.school.food.feast.entit.*{*;}
