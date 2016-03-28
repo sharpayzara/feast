@@ -80,6 +80,15 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 			e.printStackTrace();
 		}
 	}
+	public boolean judgeIsLogin(){
+		if(!UserServices.isLogin(mContext)){
+			Intent intent = new Intent(mContext, LoginActivity.class);
+			startActivityForResult(intent,1);
+			return false;
+		}else{
+			return true;
+		}
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -88,9 +97,15 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 			((Activity)mContext).startActivityForResult(intent, 1);
 		}
 		else if(v == ye_btn){
+			if(!judgeIsLogin()){
+				return;
+			}
 			Intent intent = new Intent(mContext,QueryBalanceActivity.class);
 			mContext.startActivity(intent);
 		}else if(v == cj_btn){
+			if(!judgeIsLogin()){
+				return;
+			}
 			Intent intent = new Intent(mContext,LotteryActivity.class);
 			mContext.startActivity(intent);
 		}
@@ -118,6 +133,9 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 			});*/
 		}
 		else if(v == cz_btn){
+			if(!judgeIsLogin()){
+				return;
+			}
 			Intent intent = new Intent(mContext,CZActivity.class);
 			mContext.startActivity(intent);
 		}
@@ -149,7 +167,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
 			Intent i = new Intent(Intent.ACTION_SEND);
 			i.setType("text/plain");
 			i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-			i.putExtra(Intent.EXTRA_TEXT, "我已安装校园美食坊app，方便快捷，推荐你也使用: " + Constant.URL.shareURL);
+			i.putExtra(Intent.EXTRA_TEXT, "我已安装课间便当app，方便快捷，推荐你也使用: " + Constant.URL.shareURL);
 			startActivity(i);
 			/*final User user = new User();
 			user.setAccountMoney(Double.parseDouble(5+""));

@@ -38,10 +38,4 @@ public class CommonHeadPanelActivity extends BaseActivity {
         backBtn.setVisibility(View.VISIBLE);
     }
 
-    public void judgeIsLogin(){
-        if(!UserServices.isLogin(this)){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent,1);
-        }
-    }
 }

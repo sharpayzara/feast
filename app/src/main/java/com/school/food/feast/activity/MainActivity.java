@@ -50,6 +50,7 @@ public class MainActivity extends FragmentActivity implements BottomControlPanel
     }
 
     private void checkUpdate() {
+        //BmobUpdateAgent.initAppVersion(this);
         BmobUpdateAgent.update(this);
     }
 

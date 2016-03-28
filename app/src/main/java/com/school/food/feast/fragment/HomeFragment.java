@@ -14,9 +14,11 @@ import android.widget.RelativeLayout;
 import com.bmob.pay.tool.BmobPay;
 import com.school.food.feast.R;
 import com.school.food.feast.activity.ChannelActivity;
+import com.school.food.feast.activity.LoginActivity;
 import com.school.food.feast.activity.PayActivity;
 import com.school.food.feast.activity.TakeAwayActivity;
 import com.school.food.feast.layout.AdColumnFrame;
+import com.school.food.feast.services.UserServices;
 import com.school.food.feast.util.Constant;
 import com.school.food.feast.util.SizeUtils;
 
@@ -57,14 +59,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 		adcolumnLayout.addView(adLayout);
 		AdColumnFrame.getInstence(mContext, adLayout);
 	}
+	public boolean judgeIsLogin(){
+		if(!UserServices.isLogin(mContext)){
+			Intent intent = new Intent(mContext, LoginActivity.class);
+			startActivityForResult(intent,1);
+			return false;
+		}else{
+			return true;
+		}
+	}
 
 	@Override
 	public void onClick(View v) {
 		if(v == dmf_layout){
+			if(!judgeIsLogin()){
+				return;
+			}
             Intent intent = new Intent(mContext, PayActivity.class);
             mContext.startActivity(intent);
 		}
 		else if(v == preorderLayout){
+			if(!judgeIsLogin()){
+				return;
+			}
 			Intent intent = new Intent(mContext, ChannelActivity.class);
 			mContext.startActivity(intent);
 		}

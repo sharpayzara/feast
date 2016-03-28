@@ -1,7 +1,8 @@
 package com.school.food.feast.util;
 
 public class Constant {
-	public static final String APPID = "7ff3b5ddaf309007e16c13b8fafc1fd1";
+	//public static final String APPID = "7ff3b5ddaf309007e16c13b8fafc1fd1";
+	public static final String APPID = "0acf0e0a6af176a3d7febac237423ada";
 
 	public static final String Preferences_user= "user";
 	public static final String Preferences_username = "username";
@@ -34,6 +35,6 @@ public class Constant {
 	}
 
 	public static class URL{
-		public static String shareURL="https://www.baidu.com";
+		public static String shareURL="http://61.160.222.140:81/feast.apk";
 	}
 }
