@@ -155,4 +155,12 @@
         android:text="去付款"
         android:textColor="@color/white"
         android:background="@drawable/pay_btn_selector"/>
+    <TextView
+        android:id="@+id/messageDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pay_btn"
+        tools:text="*注：提前1小时内预定，享受9.5折，1-3小时内享受9折，3小时以后享受8折，预定只做优惠打折，餐票可换购该商家同等价位的其他套餐"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="20dp"/>
 </RelativeLayout>

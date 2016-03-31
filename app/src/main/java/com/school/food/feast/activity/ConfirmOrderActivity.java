@@ -16,8 +16,10 @@ import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 import com.school.food.feast.R;
 import com.school.food.feast.activity.base.CommonHeadPaneFraglActivity;
+import com.school.food.feast.entity.DescribeMessage;
 import com.school.food.feast.entity.Discount;
 import com.school.food.feast.entity.PreOrder;
+import com.school.food.feast.entity.TakeAwayPhone;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -40,7 +42,7 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
     List<PreOrder> preOrderList;
     Date endDate;
     double totalMoney,factTotalMoney;
-    TextView factPayMoney_tv,order_time_tv,discount_tv,hasDiscountValue;
+    TextView factPayMoney_tv,order_time_tv,discount_tv,hasDiscountValue,messageDetail;
     List<Discount> discountList;
     Context mContext;
     Button pay_btn;
@@ -99,6 +101,7 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
     }
 
     private void initData() {
+        loadMessage();
         sysCurrentTime = new Date().getTime();
         getServerTime();
         discountList = new ArrayList<>();
@@ -122,6 +125,24 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
         });
     }
 
+    private void loadMessage() {
+        final BmobQuery<DescribeMessage> bmobQuery = new BmobQuery<DescribeMessage>();
+        bmobQuery.order("createdAt");
+        bmobQuery.findObjects(this, new FindListener<DescribeMessage>() {
+
+            @Override
+            public void onSuccess(List<DescribeMessage> object) {
+                messageDetail.setText(object.get(0).getMessageContent());
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                // TODO Auto-generated method stub
+                //toast("网络获取失败，请稍候再试");
+            }
+        });
+    }
+
     private void initUI() {
         setHeadTitle("下单");
         showBackBtn();
@@ -132,6 +153,7 @@ public class ConfirmOrderActivity extends CommonHeadPaneFraglActivity implements
         hasDiscountValue = (TextView) findViewById(R.id.hasDiscountValue);
         order_tlt = (TableLayout) findViewById(R.id.order_tlt);
         preOrderList = (List<PreOrder>) getIntent().getSerializableExtra("preOrderList");
+        messageDetail = (TextView) findViewById(R.id.messageDetail);
         inflater = LayoutInflater.from(this);
 
         for(PreOrder order : preOrderList){

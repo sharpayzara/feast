@@ -16,7 +16,6 @@
 #   public *;
 #}
 -ignorewarnings
-
 # 这里根据具体的SDK版本修改
 
 -keepattributes Signature
@@ -24,3 +23,7 @@
 
 # 保证继承自BmobObject、BmobUser类的JavaBean不被混淆
 -keep class com.school.food.feast.entit.*{*;}
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.** { *;}
+-keep interface com.squareup.okhttp.** { *; }
+-dontwarn okio.**
