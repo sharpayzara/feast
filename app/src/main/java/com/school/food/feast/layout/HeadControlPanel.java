@@ -34,7 +34,6 @@ public class HeadControlPanel extends RelativeLayout{
 
 	@Override
 	protected void onFinishInflate() {
-		// TODO Auto-generated method stub
 		super.onFinishInflate();
 		mMidleTitle = (TextView)findViewById(R.id.midle_title);
 		mRightTitle = (Button) findViewById(R.id.right_title);
